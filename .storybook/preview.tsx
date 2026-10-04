@@ -1,11 +1,10 @@
 import type { Decorator, Preview } from '@storybook/react-vite';
 import '../src/styles/tokens.css';
+import { ThemedDocsContainer, applyTheme } from './ThemedDocsContainer';
 
 const withTheme: Decorator = (Story, context) => {
   const theme = context.globals.theme === 'dark' ? 'dark' : 'light';
-  document.documentElement.dataset.theme = theme;
-  document.body.style.background = theme === 'dark' ? '#1e1c1a' : '#ffffff';
-  document.body.style.color = theme === 'dark' ? '#e5e5e5' : '#1e1c1a';
+  applyTheme(theme);
   return <Story />;
 };
 
@@ -29,7 +28,7 @@ const preview: Preview = {
   parameters: {
     layout: 'centered',
     controls: { expanded: true },
-    docs: { toc: { headingSelector: 'h2, h3', title: 'En esta página' } },
+    docs: { container: ThemedDocsContainer, toc: { headingSelector: 'h2, h3', title: 'En esta página' } },
     options: { storySort: { order: ['Componentes', ['Tag', ['Documentación', 'Playground', 'Estados', 'Tamaños']]] } },
   },
 };
