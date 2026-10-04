@@ -1,7 +1,8 @@
 import { Meta, Canvas, Controls, Story } from '@storybook/addon-docs/blocks';
 import * as TagStories from './Tag.stories';
+import { Tag } from './Tag';
 
-<Meta of={TagStories} />
+<Meta of={TagStories} name="Documentación" />
 
 # Tag
 
@@ -24,15 +25,24 @@ Auto layout horizontal · ancho y alto ajustados al contenido · icono opcional 
 
 ## 02 · Propiedades
 
-| Propiedad | Valores | Uso |
+### Tamaño (size)
+
+| Valor | Vista | Uso |
 | --- | --- | --- |
-| `size` | `small` | tablas y listas densas |
-| | `default` | tarjetas y vistas de detalle |
-| `status` | `info` | información de contexto o progreso · icono Info |
-| | `success` | resultado completado correctamente · icono CheckCircle |
-| | `warning` | situación que requiere atención · icono Warning |
-| | `error` | fallo o resultado no completado · icono XCircle |
-| | `neutral` | clasificación sin valoración semántica · icono configurable |
+| `small` | <Tag size="small" status="info" label="Label" text="Description" /> | Tablas y listas densas |
+| `default` | <Tag size="default" status="info" label="Label" text="Description" /> | Tarjetas y vistas de detalle |
+
+### Estado (status)
+
+| Valor | Vista | Uso | Icono |
+| --- | --- | --- | --- |
+| `info` | <Tag status="info" label="Label" text="Description" /> | Información de contexto o progreso | Info |
+| `success` | <Tag status="success" label="Label" text="Description" /> | Resultado completado correctamente | CheckCircle |
+| `warning` | <Tag status="warning" label="Label" text="Description" /> | Situación que requiere atención | Warning |
+| `error` | <Tag status="error" label="Label" text="Description" /> | Fallo o resultado no completado | XCircle |
+| `neutral` | <Tag status="neutral" label="Label" text="Description" /> | Clasificación sin valoración semántica | Configurable |
+
+### Contenido
 
 Contenido editable: `label` y `text`. `showIcon` muestra u oculta el icono (`true` por defecto). `icon` permite sustituirlo **solo en neutral**; los estados de señal conservan su icono semántico.
 
@@ -102,13 +112,13 @@ Usa texto plano por defecto. La tag se justifica cuando reconocer un estado, cat
 
 Una vez justificada la tag, elige el estado según el significado operativo. Usa el mismo icono para el mismo objeto en todo el producto.
 
-| Estado | Criterio |
-| --- | --- |
-| info | Información de contexto o progreso. |
-| success | Resultado completado correctamente. |
-| warning | Situación que requiere atención. |
-| error | Fallo o resultado no completado. |
-| neutral | Clasificación sin valoración semántica. Usa neutral cuando el estado importa pero el color no debe añadir significado. |
+| Estado | Vista | Criterio |
+| --- | --- | --- |
+| info | <Tag size="small" status="info" label="info" text="ejemplo" /> | Información de contexto o progreso. |
+| success | <Tag size="small" status="success" label="success" text="ejemplo" /> | Resultado completado correctamente. |
+| warning | <Tag size="small" status="warning" label="warning" text="ejemplo" /> | Situación que requiere atención. |
+| error | <Tag size="small" status="error" label="error" text="ejemplo" /> | Fallo o resultado no completado. |
+| neutral | <Tag size="small" status="neutral" label="neutral" text="ejemplo" /> | Clasificación sin valoración semántica. Usa neutral cuando el estado importa pero el color no debe añadir significado. |
 
 **Ejemplos de estado**
 

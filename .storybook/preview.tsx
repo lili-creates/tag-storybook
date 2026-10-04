@@ -29,6 +29,8 @@ const preview: Preview = {
   parameters: {
     layout: 'centered',
     controls: { expanded: true },
+    docs: { toc: { headingSelector: 'h2, h3', title: 'En esta página' } },
+    options: { storySort: { order: ['Componentes', ['Tag', ['Documentación', 'Playground', 'Estados', 'Tamaños']]] } },
   },
 };
 

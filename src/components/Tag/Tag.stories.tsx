@@ -26,6 +26,28 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
 
+export const Estados: Story = {
+  parameters: { layout: 'padded' },
+  render: (args) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
+      {STATUSES.map((status) => (
+        <Tag key={status} {...args} status={status} />
+      ))}
+    </div>
+  ),
+};
+
+export const Tamaños: Story = {
+  parameters: { layout: 'padded' },
+  render: (args) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
+      {SIZES.map((size) => (
+        <Tag key={size} {...args} size={size} />
+      ))}
+    </div>
+  ),
+};
+
 export const Small: Story = { args: { size: 'small' } };
 
 export const SinIcono: Story = { args: { showIcon: false } };
