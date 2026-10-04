@@ -1,0 +1,96 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-md);
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: var(--radius-semantic-xs);
+  white-space: nowrap;
+  background: var(--tag-bg);
+  color: var(--tag-fg);
+}
+
+.tag__group {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.tag__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.tag__label {
+  font-family: var(--tag-label-family);
+  font-size: var(--tag-label-size);
+  line-height: var(--tag-label-lh);
+  letter-spacing: var(--tag-label-ls);
+  font-weight: var(--font-weight-bold);
+}
+
+.tag__text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--tag-body-family);
+  font-size: var(--tag-body-size);
+  line-height: var(--tag-body-lh);
+  letter-spacing: var(--tag-body-ls);
+  font-weight: var(--font-weight-regular);
+}
+
+/* Tamaños */
+.tag--small {
+  padding: var(--space-xs) var(--space-md);
+  --tag-label-family: var(--label-s-font-family);
+  --tag-label-size: var(--label-s-font-size);
+  --tag-label-lh: var(--label-s-line-height);
+  --tag-label-ls: var(--label-s-letter-spacing);
+  --tag-body-family: var(--body-s-font-family);
+  --tag-body-size: var(--body-s-font-size);
+  --tag-body-lh: var(--body-s-line-height);
+  --tag-body-ls: var(--body-s-letter-spacing);
+}
+
+.tag--default {
+  padding: var(--space-md) var(--space-lg);
+  --tag-label-family: var(--label-m-font-family);
+  --tag-label-size: var(--label-m-font-size);
+  --tag-label-lh: var(--label-m-line-height);
+  --tag-label-ls: var(--label-m-letter-spacing);
+  --tag-body-family: var(--body-m-font-family);
+  --tag-body-size: var(--body-m-font-size);
+  --tag-body-lh: var(--body-m-line-height);
+  --tag-body-ls: var(--body-m-letter-spacing);
+}
+
+/* Estados */
+.tag--info {
+  --tag-bg: var(--semantic-background-signal-info-subtle-default);
+  --tag-fg: var(--semantic-content-signal-info-on-subtle);
+}
+.tag--success {
+  --tag-bg: var(--semantic-background-signal-success-subtle-default);
+  --tag-fg: var(--semantic-content-signal-success-on-subtle);
+}
+.tag--warning {
+  --tag-bg: var(--semantic-background-signal-warning-subtle-default);
+  --tag-fg: var(--semantic-content-signal-warning-on-subtle);
+}
+.tag--error {
+  --tag-bg: var(--semantic-background-signal-error-subtle-default);
+  --tag-fg: var(--semantic-content-signal-error-on-subtle);
+}
+.tag--neutral {
+  --tag-bg: var(--semantic-background-neutral-subtle-default);
+  --tag-fg: var(--semantic-content-default-subtle);
+}

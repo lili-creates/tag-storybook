@@ -1,0 +1,52 @@
+/* Tokens extraídos del archivo de Figma "One more tag" (colección Colors, modos Light / Dark). */
+:root {
+  --space-xs: 4px;
+  --space-md: 8px;
+  --space-lg: 12px;
+  --radius-semantic-xs: 4px;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  --label-s-font-family: 'Figtree', sans-serif;
+  --label-s-font-size: 12px;
+  --label-s-line-height: 16px;
+  --label-s-letter-spacing: 0px;
+  --label-m-font-family: 'Figtree', sans-serif;
+  --label-m-font-size: 14px;
+  --label-m-line-height: 20px;
+  --label-m-letter-spacing: 0px;
+  --body-s-font-family: 'Figtree', sans-serif;
+  --body-s-font-size: 12px;
+  --body-s-line-height: 16px;
+  --body-s-letter-spacing: 0px;
+  --body-m-font-family: 'Figtree', sans-serif;
+  --body-m-font-size: 14px;
+  --body-m-line-height: 20px;
+  --body-m-letter-spacing: 0px;
+
+  --semantic-background-signal-info-subtle-default: #cfeefc;
+  --semantic-content-signal-info-on-subtle: #05405a;
+  --semantic-background-signal-success-subtle-default: #dbf7d4;
+  --semantic-content-signal-success-on-subtle: #1c520e;
+  --semantic-background-signal-warning-subtle-default: #fdecce;
+  --semantic-content-signal-warning-on-subtle: #5c3b04;
+  --semantic-background-signal-error-subtle-default: #fbd0d0;
+  --semantic-content-signal-error-on-subtle: #580808;
+  --semantic-background-neutral-subtle-default: #e1deda;
+  --semantic-content-default-subtle: #1e1c1a;
+}
+
+:root[data-theme='dark'] {
+  --semantic-background-signal-info-subtle-default: #0f3b48;
+  --semantic-content-signal-info-on-subtle: #92d1ed;
+  --semantic-background-signal-success-subtle-default: #1e4115;
+  --semantic-content-signal-success-on-subtle: #a9e39b;
+  --semantic-background-signal-warning-subtle-default: #4e3209;
+  --semantic-content-signal-warning-on-subtle: #eecb90;
+  --semantic-background-signal-error-subtle-default: #471010;
+  --semantic-content-signal-error-on-subtle: #ea9494;
+  --semantic-background-neutral-subtle-default: #32302e;
+  --semantic-content-default-subtle: rgba(229, 229, 229, 0.8);
+}

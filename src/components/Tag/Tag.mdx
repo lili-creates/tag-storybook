@@ -1,0 +1,154 @@
+import { Meta, Canvas, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as TagStories from './Tag.stories';
+
+<Meta of={TagStories} />
+
+# Tag
+
+Tag informativa de solo lectura: **icono + label + texto**. Tamaños `small` | `default` y estados `info` | `success` | `warning` | `error` | `neutral`.
+
+<Canvas of={TagStories.Playground} />
+<Controls of={TagStories.Playground} />
+
+## 01 · Anatomía
+
+Tres elementos, una lectura. El label identifica el objeto y el texto expresa su estado. El icono es opcional y refuerza el significado; mantén label y texto como nodos editables separados.
+
+Orden de lectura: **1 Icono · 2 Label · 3 Texto**.
+
+- **Icon** — Refuerza el significado del estado; nunca lo comunica solo. Es opcional: se muestra u oculta con `showIcon`.
+- **Label** — Nombre breve del objeto. Usa el estilo de etiqueta en negrita.
+- **Text** — Estado o detalle conciso. Usa texto regular y lenguaje directo.
+
+Auto layout horizontal · ancho y alto ajustados al contenido · icono opcional (`showIcon`), label y texto siempre presentes.
+
+## 02 · Propiedades
+
+| Propiedad | Valores | Uso |
+| --- | --- | --- |
+| `size` | `small` | tablas y listas densas |
+| | `default` | tarjetas y vistas de detalle |
+| `status` | `info` | información de contexto o progreso · icono Info |
+| | `success` | resultado completado correctamente · icono CheckCircle |
+| | `warning` | situación que requiere atención · icono Warning |
+| | `error` | fallo o resultado no completado · icono XCircle |
+| | `neutral` | clasificación sin valoración semántica · icono configurable |
+
+Contenido editable: `label` y `text`. `showIcon` muestra u oculta el icono (`true` por defecto). `icon` permite sustituirlo **solo en neutral**; los estados de señal conservan su icono semántico.
+
+<Canvas of={TagStories.MatrizDeVariantes} />
+
+### Variables por estado
+
+| status | Background | Text e Icon |
+| --- | --- | --- |
+| info | `--semantic-background-signal-info-subtle-default` | `--semantic-content-signal-info-on-subtle` |
+| success | `--semantic-background-signal-success-subtle-default` | `--semantic-content-signal-success-on-subtle` |
+| warning | `--semantic-background-signal-warning-subtle-default` | `--semantic-content-signal-warning-on-subtle` |
+| error | `--semantic-background-signal-error-subtle-default` | `--semantic-content-signal-error-on-subtle` |
+| neutral | `--semantic-background-neutral-subtle-default` | `--semantic-content-default-subtle` |
+
+### Comportamiento del texto
+
+Una sola línea, sin saltos. Ancho ajustado al contenido, con un máximo igual al espacio disponible del contenedor. Acorta la redacción antes de truncar. Solo **Text** se trunca con puntos suspensivos; Label e icono permanecen completos.
+
+<Canvas of={TagStories.TextoTruncado} />
+
+Si Text se trunca, muestra su contenido completo en un tooltip accesible al pasar el cursor y al enfocar el elemento asociado mediante teclado. La tag sigue siendo informativa y no entra en el orden de tabulación: utiliza un elemento asociado que ya sea enfocable. Si no existe, muestra el texto completo por otra vía accesible y no dependas de un tooltip solo por hover. Asocia el tooltip a su activador con `aria-describedby` y `role="tooltip"`; permite cerrarlo con Escape y mantenerlo visible al mover el cursor sobre él. Conserva el texto completo para los lectores de pantalla.
+
+### Medidas
+
+| | small | default |
+| --- | --- | --- |
+| Padding vertical | `--space-xs` (4px) | `--space-md` (8px) |
+| Padding horizontal | `--space-md` (8px) | `--space-lg` (12px) |
+| Gap icono–Label | `--space-xs` | `--space-xs` |
+| Gap grupo–Text | `--space-md` | `--space-md` |
+| Radio | `--radius-semantic-xs` (4px) | `--radius-semantic-xs` (4px) |
+| Label | Label/s/Bold · 12/16 | Label/m/Bold · 14/20 |
+| Text | Body/s/Regular · 12/16 | Body/m/Regular · 14/20 |
+| Icono (no tokenizado) | 16 × 16 px | 16 × 16 px |
+| Altura resultante | 24 px | 36 px |
+
+## 03 · Modo oscuro
+
+El modo oscuro se activa con el modo Dark de la colección Colors y conserva los tokens documentados. Usa el selector **Tema** de la barra superior de Storybook para verlo.
+
+## 04 · ¿Tag o texto plano?
+
+Usa texto plano por defecto. La tag se justifica cuando reconocer un estado, categoría o incidencia ayuda a interpretar, localizar o priorizar información de la operación. Ser un dato categórico no basta: debe aportar utilidad para la tarea.
+
+**Ejemplos logísticos**
+
+- ENV-10482, transportista DHL, destino Madrid, 24 palés y fechas: texto plano por defecto.
+- Retenido en aduana en una tabla de envíos: tag, porque el usuario necesita localizarlo entre cientos de filas.
+
+**En tablas densas**
+
+- Revisa la columna o tabla completa, no solo una celda.
+- Usa `small` si la tag está justificada y omite el icono si no aporta lectura.
+- No conviertas cada metadato en tag ni decores cada valor rutinario.
+- Preserva la comparación entre filas y evita que la tag rompa la densidad de datos.
+
+**Ante solicitud de color por estética**
+
+- Pregúntate qué distinción o decisión operativa facilita.
+- Si no existe, mantén texto plano.
+- Neutral solo si la etiqueta ya está justificada.
+- Nunca elijas info/success/warning/error para combinar con una paleta.
+- Si se necesita nueva clasificación cromática funcional, documenta su significado y consistencia a nivel de sistema antes de añadir colores fuera de estas variantes.
+
+## 05 · Criterios de estado
+
+Una vez justificada la tag, elige el estado según el significado operativo. Usa el mismo icono para el mismo objeto en todo el producto.
+
+| Estado | Criterio |
+| --- | --- |
+| info | Información de contexto o progreso. |
+| success | Resultado completado correctamente. |
+| warning | Situación que requiere atención. |
+| error | Fallo o resultado no completado. |
+| neutral | Clasificación sin valoración semántica. Usa neutral cuando el estado importa pero el color no debe añadir significado. |
+
+**Ejemplos de estado**
+
+- Retenido en aduana → warning
+- Entrega fallida → error
+- En tránsito → info o texto plano según la tabla
+- Entregado → success o texto plano según la tabla
+- Refrigerado o Mercancía peligrosa → neutral si ayuda a manipulación o planificación; no confundas categoría con incidencia.
+
+**Icono neutral vs. estados de señal**
+
+En neutral no hay valoración que transmitir: el icono deja de indicar severidad y pasa a identificar el objeto o el contexto (por ejemplo, un paquete para un pedido). Por eso se puede sustituir.
+
+<Canvas of={TagStories.IconoNeutralPersonalizado} />
+
+En los estados de señal, el icono comunica severidad y es fijo. Usa siempre el mismo icono para el mismo objeto en todo el producto y elígelo del set de iconos del sistema.
+
+## 06 · Uso y contenido
+
+Coloca la tag junto al elemento que describe. Escribe un label concreto y un texto breve; evita duplicar la misma información en ambos.
+
+<Canvas of={TagStories.EjemplosDeUso} />
+
+`label` y `text` son propiedades de texto, no variantes. `showIcon = true` por defecto; permite ocultar el icono. `icon` solo se aplica a neutral. Acorta la redacción antes de truncar.
+
+<Canvas of={TagStories.SinIcono} />
+
+**Informar, no actuar.** La tag no es un botón ni un filtro. No añadas cierre, chevron, selección o interacción. Si necesitas una acción, usa un control dedicado.
+
+## 07 · Accesibilidad
+
+- **No depender solo del color.** Expresa siempre el estado con texto en label y text; el significado nunca debe depender únicamente del color. Cuando el icono está visible (`showIcon = true`), es decorativo y se marca con `aria-hidden="true"`. Si `showIcon = false`, el texto debe bastar por sí solo.
+- **Contraste y lectura.** Verifica al menos 4,5:1 entre el texto (label y text) y el fondo del estado correspondiente. El icono, al ser decorativo, no requiere umbral mínimo. Mantén el orden de lectura: label, texto.
+- **Sin semántica de botón.** No uses `role="button"`, `tabindex` ni cursor de acción. La tag es contenido informativo y no entra en el orden de tabulación. Si el estado cambia en vivo, anúncialo desde el contenedor con `role="status"` cuando sea necesario.
+
+## 08 · Referencias
+
+Criterio propio para este producto, adaptado de:
+
+- [GOV.UK · estados útiles](https://design-system.service.gov.uk/components/tag/)
+- [Carbon · categorías y escaneo](https://carbondesignsystem.com/components/tag/usage/)
+- [Atlassian · interpretación y prioridad](https://atlassian.design/components/lozenge/usage)
+- [USWDS · evitar exceso de destacados](https://designsystem.digital.gov/components/tag/)
