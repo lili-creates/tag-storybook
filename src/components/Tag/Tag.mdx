@@ -13,15 +13,15 @@ Tag informativa de solo lectura: **icono + label + texto**. Tamaños `small` | `
 
 ## 01 · Anatomía
 
-Tres elementos, una lectura. El label identifica el objeto y el texto expresa su estado. El icono es opcional y refuerza el significado; mantén label y texto como nodos editables separados. El grupo icono + label se puede ocultar con `showLabelGroup`, dejando solo el texto.
+Tres elementos, una lectura. El label identifica el objeto y el texto expresa su estado. El icono es opcional y refuerza el significado. Cuando el contexto ya identifica el objeto, el grupo Label + icono puede ocultarse sin perder legibilidad; mantén label y texto como nodos editables separados.
 
 Orden de lectura: **1 Icono · 2 Label · 3 Texto**.
 
-- **Icon** — Refuerza el significado del estado; nunca lo comunica solo. Es opcional: se muestra u oculta con `showIcon`.
-- **Label** — Nombre breve del objeto. Usa el estilo de etiqueta en negrita.
+- **Icon** — Refuerza el significado del estado; nunca lo comunica solo. Es opcional dentro del grupo Label + icono: se muestra u oculta con `showIcon` cuando `showLabelGroup` es `true`.
+- **Label** — Nombre breve del objeto. Usa el estilo de etiqueta en negrita. Se muestra dentro del grupo Label + icono cuando `showLabelGroup` es `true`.
 - **Text** — Estado o detalle conciso. Usa texto regular y lenguaje directo.
 
-Auto layout horizontal · ancho y alto ajustados al contenido · icono opcional (`showIcon`) · grupo icono + label opcional (`showLabelGroup`) · el texto siempre está presente.
+Auto layout horizontal · ancho y alto ajustados al contenido · Text siempre visible; grupo Label + icono opcional (`showLabelGroup`) e icono opcional dentro del grupo (`showIcon`).
 
 ## 02 · Propiedades
 
@@ -46,8 +46,20 @@ Auto layout horizontal · ancho y alto ajustados al contenido · icono opcional 
 
 Contenido editable: `label` y `text`.
 
-- `showLabelGroup` muestra u oculta el grupo icono + label (`true` por defecto). Con `false` la tag muestra solo el Text.
-- `showIcon` muestra u oculta el icono (`true` por defecto). No tiene efecto si `showLabelGroup` es `false`. `icon` permite sustituirlo **solo en neutral**; los estados de señal conservan su icono semántico.
+- `showIcon` muestra u oculta el icono dentro del grupo (`true` por defecto).
+- `showLabelGroup` controla la visibilidad del contenedor que agrupa icono y Label (`true` por defecto).
+- `icon` permite sustituirlo **solo en neutral**; los estados de señal conservan su icono semántico.
+
+### Grupo Label + icono (showLabelGroup)
+
+| Valor | Vista | Uso |
+| --- | --- | --- |
+| `true` | <Tag size="small" status="info" label="Label" text="Description" /> | Muestra el contenedor que agrupa icono y Label. Text permanece visible. |
+| `false` | <Tag size="small" status="info" label="Label" text="Description" showLabelGroup={false} /> | Oculta el grupo Label + icono. Text sigue visible. `showIcon` no aplica cuando el grupo está oculto. |
+
+En tablas densas, permite evitar repetir el tipo de dato en cada fila cuando el encabezado o contexto ya lo identifica. Usa `false` solo si Text y contexto siguen siendo comprensibles sin depender del color.
+
+<Canvas of={TagStories.SoloTexto} />
 
 <Canvas of={TagStories.MatrizDeVariantes} />
 
@@ -63,7 +75,7 @@ Contenido editable: `label` y `text`.
 
 ### Comportamiento del texto
 
-Una sola línea, sin saltos. Ancho ajustado al contenido, con un máximo igual al espacio disponible del contenedor. Acorta la redacción antes de truncar. Solo **Text** se trunca con puntos suspensivos; Label e icono permanecen completos.
+Una sola línea, sin saltos. Ancho ajustado al contenido, con un máximo igual al espacio disponible del contenedor. Acorta la redacción antes de truncar. Solo **Text** se trunca con puntos suspensivos; Label e icono permanecen completos cuando `showLabelGroup` es `true`.
 
 <Canvas of={TagStories.TextoTruncado} />
 
@@ -141,24 +153,20 @@ En los estados de señal, el icono comunica severidad y es fijo. Usa siempre el 
 
 ## 06 · Uso y contenido
 
-Coloca la tag junto al elemento que describe. Escribe un label concreto y un texto breve; evita duplicar la misma información en ambos.
+Coloca la tag junto al elemento que describe. Escribe un label concreto y un texto breve; evita duplicar la misma información en ambos. Oculta el grupo Label + icono solo si el contexto ya identifica el objeto y Text sigue siendo comprensible sin depender del color.
 
 <Canvas of={TagStories.EjemplosDeUso} />
 
-`label` y `text` son propiedades de texto, no variantes. `showLabelGroup = true` y `showIcon = true` por defecto; permiten ocultar el grupo icono + label o solo el icono. `icon` solo se aplica a neutral. Acorta la redacción antes de truncar.
+`label` y `text` son propiedades de texto, no variantes. `showIcon = true` por defecto; permite ocultar el icono dentro del grupo Label + icono. `showLabelGroup = true` por defecto; permite ocultar el grupo Label + icono. `icon` solo se aplica a neutral. Acorta la redacción antes de truncar.
 
 <Canvas of={TagStories.SinIcono} />
-
-Sin label, solo con el texto (`showLabelGroup = false`). Úsalo solo cuando el contexto ya identifica el objeto:
-
-<Canvas of={TagStories.SoloTexto} />
 
 **Informar, no actuar.** La tag no es un botón ni un filtro. No añadas cierre, chevron, selección o interacción. Si necesitas una acción, usa un control dedicado.
 
 ## 07 · Accesibilidad
 
-- **No depender solo del color.** Expresa siempre el estado con texto en label y text; el significado nunca debe depender únicamente del color. Cuando el icono está visible (`showIcon = true`), es decorativo y se marca con `aria-hidden="true"`. Si `showIcon = false` o `showLabelGroup = false`, el texto debe bastar por sí solo.
-- **Contraste y lectura.** Verifica al menos 4,5:1 entre el texto (label y text) y el fondo del estado correspondiente. El icono, al ser decorativo, no requiere umbral mínimo. Mantén el orden de lectura: label, texto.
+- **No depender solo del color.** El estado debe estar expresado en Text; el significado nunca debe depender únicamente del color. Si el grupo Label + icono está oculto, Text y el contexto deben bastar para comprenderlo. Cuando el icono está visible (`showLabelGroup = true` y `showIcon = true`), es decorativo: márcalo con `aria-hidden="true"`.
+- **Contraste y lectura.** Verifica al menos 4,5:1 entre el texto (label y text) y el fondo del estado correspondiente. El icono, al ser decorativo, no requiere umbral mínimo. Mantén el orden de lectura según los elementos visibles: cuando `showLabelGroup` es `true`, el orden es label, texto; cuando es `false`, el orden es texto.
 - **Sin semántica de botón.** No uses `role="button"`, `tabindex` ni cursor de acción. La tag es contenido informativo y no entra en el orden de tabulación. Si el estado cambia en vivo, anúncialo desde el contenedor con `role="status"` cuando sea necesario.
 
 ## 08 · Referencias
