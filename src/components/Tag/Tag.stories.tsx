@@ -12,6 +12,7 @@ const meta = {
     status: 'info',
     label: 'Label',
     text: 'Description',
+    showLabelGroup: true,
     showIcon: true,
   },
   argTypes: {
@@ -51,6 +52,11 @@ export const Tamaños: Story = {
 export const Small: Story = { args: { size: 'small' } };
 
 export const SinIcono: Story = { args: { showIcon: false } };
+
+export const SoloTexto: Story = {
+  name: 'Sin label (solo Text)',
+  args: { showLabelGroup: false, text: 'En tránsito' },
+};
 
 export const IconoNeutralPersonalizado: Story = {
   name: 'Neutral con icono sustituido',

@@ -13,7 +13,9 @@ export interface TagProps {
   label: string;
   /** Estado o detalle conciso (texto regular). Es lo único que se trunca. */
   text: string;
-  /** Muestra u oculta el icono. */
+  /** Muestra u oculta el grupo icono + label. Si es `false`, la tag muestra solo el Text. */
+  showLabelGroup?: boolean;
+  /** Muestra u oculta el icono. No tiene efecto si `showLabelGroup` es `false`. */
   showIcon?: boolean;
   /** Sustituye el icono. Solo se aplica a `neutral`; los estados de señal conservan su icono semántico. */
   icon?: ReactNode;
@@ -34,6 +36,7 @@ export function Tag({
   status = 'info',
   label,
   text,
+  showLabelGroup = true,
   showIcon = true,
   icon,
   className,
@@ -43,14 +46,16 @@ export function Tag({
 
   return (
     <span className={classes}>
-      <span className="tag__group">
-        {showIcon && (
-          <span className="tag__icon" aria-hidden="true">
-            {customIcon ?? <i className={`ph ${STATUS_ICON[status]}`} />}
-          </span>
-        )}
-        <span className="tag__label">{label}</span>
-      </span>
+      {showLabelGroup && (
+        <span className="tag__group">
+          {showIcon && (
+            <span className="tag__icon" aria-hidden="true">
+              {customIcon ?? <i className={`ph ${STATUS_ICON[status]}`} />}
+            </span>
+          )}
+          <span className="tag__label">{label}</span>
+        </span>
+      )}
       <span className="tag__text">{text}</span>
     </span>
   );
