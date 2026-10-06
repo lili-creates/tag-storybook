@@ -1,6 +1,7 @@
 import { Meta, Canvas, Controls, Story } from '@storybook/addon-docs/blocks';
 import * as TagStories from './Tag.stories';
 import { Tag } from './Tag';
+import { TagAnatomy } from './TagAnatomy';
 
 <Meta of={TagStories} name="Documentación" />
 
@@ -15,11 +16,13 @@ Tag informativa de solo lectura: **icono + label + texto**. Tamaños `small` | `
 
 Tres elementos, una lectura. El label identifica el objeto y el texto expresa su estado. El icono es opcional y refuerza el significado. Cuando el contexto ya identifica el objeto, el grupo Label + icono puede ocultarse sin perder legibilidad; mantén label y texto como nodos editables separados.
 
-Orden de lectura: **1 Icono · 2 Label · 3 Texto**.
+<TagAnatomy />
 
-- **Icon** — Refuerza el significado del estado; nunca lo comunica solo. Es opcional dentro del grupo Label + icono: se muestra u oculta con `showIcon` cuando `showLabelGroup` es `true`.
-- **Label** — Nombre breve del objeto. Usa el estilo de etiqueta en negrita. Se muestra dentro del grupo Label + icono cuando `showLabelGroup` es `true`.
-- **Text** — Estado o detalle conciso. Usa texto regular y lenguaje directo.
+| # | Tipo | Elemento | Notas |
+| :-: | :-: | --- | --- |
+| 1 | ▢ | Etiqueta | Organiza horizontalmente el grupo de etiquetas opcionales y la descripción; fondo de color de estado con esquinas de 4 px. |
+| 2 | ▢ | contenedor | Agrupa el icono y la etiqueta; se muestra a través de `Mostrar grupo de etiquetas` (`showLabelGroup`). El icono se controla de forma independiente mediante `Mostrar icono` (`showIcon`) y se puede intercambiar a través de `Icono` (`icon`). |
+| 3 | **T** | Texto | "Descripción" — texto de apoyo, editable a través de la propiedad `Texto` (`text`). |
 
 Auto layout horizontal · ancho y alto ajustados al contenido · Text siempre visible; grupo Label + icono opcional (`showLabelGroup`) e icono opcional dentro del grupo (`showIcon`).
 

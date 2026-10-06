@@ -1,0 +1,85 @@
+.tag-anatomy {
+  --anatomy-accent: #eb006e;
+  margin: 0;
+  padding: 48px 16px;
+  border-radius: 12px;
+  background: rgba(128, 128, 128, 0.1);
+}
+
+.tag-anatomy__grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  /* fila superior e inferior simétricas para que la tag quede centrada */
+  grid-template-rows: 73px auto 73px;
+  grid-template-areas:
+    '. top .'
+    'left tag right'
+    '. . .';
+  align-items: center;
+}
+
+.tag-anatomy__grid > .tag {
+  grid-area: tag;
+}
+
+/* Contornos discontinuos de las tres partes */
+.tag-anatomy .tag,
+.tag-anatomy .tag__group,
+.tag-anatomy .tag__text {
+  outline: 1px dashed var(--anatomy-accent);
+  outline-offset: 0;
+}
+
+.tag-anatomy__callout {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* Las líneas se adentran en el padding de la tag hasta tocar cada parte */
+.tag-anatomy__callout--top {
+  grid-area: top;
+  flex-direction: column;
+  justify-self: center;
+}
+/* Las líneas se adentran en el padding de la tag hasta tocar cada parte */
+.tag-anatomy__callout--left {
+  grid-area: left;
+  justify-self: end;
+  transform: translateX(8px);
+}
+.tag-anatomy__callout--right {
+  grid-area: right;
+  justify-self: start;
+  transform: translateX(-8px);
+}
+
+.tag-anatomy__marker {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  background: var(--anatomy-accent);
+  color: #fff;
+  font: 600 14px/1 'Figtree', sans-serif;
+}
+
+.tag-anatomy__line {
+  flex: none;
+  box-sizing: content-box;
+  border: 0 solid var(--anatomy-accent); /* los bordes se ajustan al píxel y no se difuminan */
+}
+.tag-anatomy__line--h {
+  width: 48px;
+  height: 0;
+  border-top-width: 1px;
+}
+.tag-anatomy__line--v {
+  width: 0;
+  height: 40px;
+  border-left-width: 1px;
+}
