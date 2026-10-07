@@ -1,0 +1,37 @@
+{/* Plantilla de página de foundations. Cópiala a src/foundations/Colors.mdx, etc. */}
+import { Meta } from '@storybook/addon-docs/blocks';
+import { ColorSwatches } from './ColorSwatches';
+import { TypeScale } from './TypeScale';
+import { SpaceScale } from './SpaceScale';
+
+<Meta title="Foundations/Tokens" />
+
+# Tokens
+
+Fuente de verdad: `src/styles/tokens.css`, generado desde las variables del Figma. Cambia el selector **Tema** de la barra para ver el modo oscuro.
+
+## Color
+
+<ColorSwatches
+  tokens={[
+    { name: '--semantic-background-signal-info-subtle-default', usage: 'Fondo de la tag info' },
+    { name: '--semantic-content-signal-info-on-subtle', usage: 'Texto e icono sobre fondo info' },
+  ]}
+/>
+
+## Tipografía
+
+<TypeScale
+  styles={[
+    { token: 'label-m', weight: '--font-weight-bold', sample: 'Label M' },
+    { token: 'body-m', weight: '--font-weight-regular', sample: 'Body M' },
+  ]}
+/>
+
+## Espaciado
+
+<SpaceScale tokens={['--space-xs', '--space-md', '--space-lg']} />
+
+## Radios
+
+<SpaceScale kind="radius" tokens={['--radius-semantic-xs']} />

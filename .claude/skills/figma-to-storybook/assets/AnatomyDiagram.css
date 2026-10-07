@@ -1,0 +1,86 @@
+.anatomy {
+  --anatomy-accent: #eb006e;
+  margin: 0;
+  padding: 48px 16px;
+  border-radius: 12px;
+  background: rgba(128, 128, 128, 0.1);
+}
+
+.anatomy__grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  /* fila superior e inferior simétricas para que la pieza quede centrada */
+  grid-template-rows: 73px auto 73px;
+  grid-template-areas:
+    '. top .'
+    'left subject right'
+    '. . .';
+  align-items: center;
+}
+
+.anatomy__subject {
+  grid-area: subject;
+  display: inline-flex;
+}
+
+/* Contornos discontinuos. Añade aquí un selector por parte: ".anatomy .mi-parte". */
+.anatomy__subject > *,
+.anatomy .mi-componente__grupo,
+.anatomy .mi-componente__texto {
+  outline: 1px dashed var(--anatomy-accent);
+  outline-offset: 0;
+}
+
+.anatomy__callout {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* Las líneas se adentran 8px (= el padding del componente) hasta tocar cada parte: ajusta el valor */
+.anatomy__callout--top {
+  grid-area: top;
+  flex-direction: column;
+  justify-self: center;
+}
+/* Las líneas se adentran 8px (= el padding del componente) hasta tocar cada parte: ajusta el valor */
+.anatomy__callout--left {
+  grid-area: left;
+  justify-self: end;
+  transform: translateX(8px);
+}
+.anatomy__callout--right {
+  grid-area: right;
+  justify-self: start;
+  transform: translateX(-8px);
+}
+
+.anatomy__marker {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  background: var(--anatomy-accent);
+  color: #fff;
+  font: 600 14px/1 'Figtree', sans-serif;
+}
+
+.anatomy__line {
+  flex: none;
+  box-sizing: content-box;
+  border: 0 solid var(--anatomy-accent); /* los bordes se ajustan al píxel y no se difuminan */
+}
+.anatomy__line--h {
+  width: 48px;
+  height: 0;
+  border-top-width: 1px;
+}
+.anatomy__line--v {
+  width: 0;
+  height: 40px;
+  border-left-width: 1px;
+}
