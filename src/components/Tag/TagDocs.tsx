@@ -175,21 +175,101 @@ export function TokenMatrix() {
   );
 }
 
-/** Bloques Do / Don't (Figma · 07 Cómo se usa la tag). */
-export function DoDont({ doItems, dontItems }: { doItems: ReactNode[]; dontItems: ReactNode[] }) {
+/** Resumen «en un vistazo»: cuatro respuestas rápidas antes de leer la página completa. */
+export function AtAGlance({ items }: { items: { title: string; text: ReactNode; ref?: string }[] }) {
+  return (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gap: 16,
+        margin: '24px 0 8px',
+      }}
+    >
+      {items.map((item) => (
+        <div
+          key={item.title}
+          style={{
+            display: 'grid',
+            gap: 8,
+            alignContent: 'start',
+            padding: 20,
+            borderRadius: 12,
+            border: '1px solid rgba(128,128,128,.3)',
+            background: 'rgba(128,128,128,.06)',
+          }}
+        >
+          <strong style={{ font: '700 12px/1.2 Figtree, sans-serif', letterSpacing: '.06em', textTransform: 'uppercase', opacity: 0.75 }}>
+            {item.title}
+          </strong>
+          <span style={{ fontSize: 15, lineHeight: 1.55 }}>{item.text}</span>
+          {item.ref && <span style={{ fontSize: 12, opacity: 0.65 }}>{item.ref}</span>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Contraejemplo: una tag con cierre. La tag no admite acciones (Figma · 07 Cómo se usa la tag). */
+export function TagWithCloseExample() {
+  return (
+    <span className="ds-tag ds-tag--default ds-tag--success" aria-hidden="true">
+      <span className="ds-tag__group">
+        <span className="ds-tag__label">Estado del pedido</span>
+      </span>
+      <span className="ds-tag__text">Confirmado</span>
+      <span style={{ marginLeft: 4, fontWeight: 700 }}>✕</span>
+    </span>
+  );
+}
+
+/** Bloques Do / Don't con ejemplos visibles (Figma · 07 Cómo se usa la tag). */
+export function DoDont({
+  doItems,
+  dontItems,
+  doExamples,
+  dontExamples,
+}: {
+  doItems: ReactNode[];
+  dontItems: ReactNode[];
+  doExamples?: ReactNode[];
+  dontExamples?: ReactNode[];
+}) {
   const box = (bg: string) =>
     ({
-      flex: 1,
+      flex: '1 1 320px',
       padding: 24,
       borderRadius: 12,
       background: `var(${bg})`,
       color: 'var(--semantic-content-default-subtle)',
     }) as const;
-  const list = { margin: '8px 0 0', paddingLeft: 24 } as const;
+  const list = { margin: '16px 0 0', paddingLeft: 24 } as const;
+  const examples = (nodes?: ReactNode[]) =>
+    nodes && (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          gap: 12,
+          marginTop: 16,
+          padding: 16,
+          borderRadius: 8,
+          background: 'var(--semantic-background-neutral-subtle-default)',
+          overflowX: 'auto',
+          maxWidth: '100%',
+        }}
+      >
+        {nodes.map((n, i) => (
+          <div key={i}>{n}</div>
+        ))}
+      </div>
+    );
   return (
     <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', margin: '24px 0 40px' }}>
       <div style={box('--semantic-background-signal-success-subtle-default')}>
         <strong style={{ font: '500 24px/30px Figtree, sans-serif' }}>Do</strong>
+        {examples(doExamples)}
         <ul style={list}>
           {doItems.map((item, i) => (
             <li key={i}>{item}</li>
@@ -198,6 +278,7 @@ export function DoDont({ doItems, dontItems }: { doItems: ReactNode[]; dontItems
       </div>
       <div style={box('--semantic-background-signal-error-subtle-default')}>
         <strong style={{ font: '500 24px/30px Figtree, sans-serif' }}>Don’t</strong>
+        {examples(dontExamples)}
         <ul style={list}>
           {dontItems.map((item, i) => (
             <li key={i}>{item}</li>

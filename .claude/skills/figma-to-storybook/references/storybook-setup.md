@@ -5,13 +5,14 @@ Plantillas listas en `assets/storybook-config/`. Cópialas a `.storybook/` (y `v
 ## Dependencias
 ```bash
 npm i react react-dom
-npm i -D storybook @storybook/react-vite @storybook/addon-docs vite typescript @types/react @types/react-dom remark-gfm
+npm i -D storybook @storybook/react-vite @storybook/addon-docs @storybook/addon-a11y vite typescript @types/react @types/react-dom remark-gfm
 ```
 `package.json`: `"type": "module"`, scripts `storybook` (`storybook dev -p 6006`) y `build-storybook`. Añade `src/vite-env.d.ts` con `/// <reference types="vite/client" />` (si no, `import './X.css'` falla en `tsc`). `.gitignore`: `node_modules`, `storybook-static`.
 
 ## main.ts
 - `stories: ['../src/**/*.mdx', '../src/**/*.stories.@(ts|tsx)']`
 - `@storybook/addon-docs` con `mdxPluginOptions.mdxCompileOptions.remarkPlugins: [remarkGfm]` → **sin esto las tablas MDX se ven como texto con `|`**.
+- Añade `'@storybook/addon-a11y'` a `addons` (panel de accesibilidad con axe en cada story).
 - No uses `tags: ['autodocs']` si escribes tú el MDX (se duplicaría la página). Enlaza el MDX con `<Meta of={Stories} name="Documentación" />`.
 
 ## Tema claro/oscuro (3 capas, las tres hacen falta)

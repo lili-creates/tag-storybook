@@ -2,13 +2,38 @@ import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
 import * as TagStories from './Tag.stories';
 import { Tag } from './Tag';
 import { TagAnatomy } from './TagAnatomy';
-import { TokenMatrix, DoDont } from './TagDocs';
+import { TokenMatrix, DoDont, AtAGlance, TagWithCloseExample } from './TagDocs';
 
 <Meta of={TagStories} name="Documentación" />
 
 # Tag
 
 Una señal compacta para comunicar estado y contexto. Informa sin pedir una acción.
+
+<AtAGlance
+  items={[
+    {
+      title: 'Úsala para',
+      text: 'Señalar un estado, categoría o incidencia que ayuda a interpretar, localizar o priorizar información.',
+      ref: 'Sección 06',
+    },
+    {
+      title: 'No la uses para',
+      text: 'Acciones, filtros o selección: no es un botón. Ni para textos largos: no trunca ni recorta su contenido.',
+      ref: 'Secciones 05 y 07',
+    },
+    {
+      title: 'Al configurarla',
+      text: 'Elige el estado por su significado, no por el color. Text siempre visible, una sola línea, siempre hug.',
+      ref: 'Secciones 07 y 08',
+    },
+    {
+      title: 'Accesibilidad',
+      text: 'Es contenido informativo: fuera del orden de tabulación. El significado va en el texto, nunca solo en el color o el icono.',
+      ref: 'Sección 09',
+    },
+  ]}
+/>
 
 ## Playground
 
@@ -98,6 +123,26 @@ En tablas densas, permite evitar repetir el tipo de dato en cada fila cuando el 
 ### Todas las variantes
 
 <Canvas of={TagStories.MatrizDeVariantes} />
+
+### Uso en código
+
+Ejemplos de las combinaciones más habituales. Las props se corresponden con las propiedades de Figma (ver arriba).
+
+```tsx
+import { Tag } from './components/Tag/Tag';
+
+// Completa: icono + Label + Text
+<Tag status="success" size="default" label="Estado del pedido" text="Confirmado" />
+
+// Sin icono: Label + Text
+<Tag status="success" label="Estado del pedido" text="Confirmado" showIcon={false} />
+
+// Solo Text: el contexto ya identifica el objeto
+<Tag status="success" text="Confirmado" showLabelGroup={false} />
+
+// Neutral con icono sustituido (icon solo aplica a neutral)
+<Tag status="neutral" label="Refrigerado" text="Cadena de frío" icon={<i className="ph ph-snowflake" />} />
+```
 
 ## 03 · Tokens de color
 
@@ -194,7 +239,12 @@ Usa texto plano por defecto. La tag se justifica cuando reconocer un estado, cat
 - Escribe el Text con el mismo criterio en todo el producto: mismo estado, mismas palabras.
 
 <DoDont
+  doExamples={[<Tag size="default" status="success" label="Estado del pedido" text="Confirmado" />]}
   doItems={['Estado del pedido · Confirmado, junto al título del pedido.']}
+  dontExamples={[
+    <Tag size="default" status="warning" label="Aduana" text="Retenido en aduana a la espera de documentación adicional del transportista" />,
+    <TagWithCloseExample />,
+  ]}
   dontItems={['Un texto largo que obligue a fill o a un salto de línea.', 'Una tag con cierre, chevron o acción.']}
 />
 

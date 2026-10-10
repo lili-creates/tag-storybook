@@ -4,6 +4,7 @@ import remarkGfm from 'remark-gfm';
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(ts|tsx)'],
   addons: [
+    '@storybook/addon-a11y',
     {
       name: '@storybook/addon-docs',
       options: {

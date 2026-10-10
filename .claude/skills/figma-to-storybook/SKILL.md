@@ -18,6 +18,7 @@ Principio rector: **el Figma es la fuente de verdad**. Todo lo que no esté en e
 | `references/component-and-docs.md` | Convenciones de componente, stories y MDX; patrón de anatomía |
 | `references/foundations.md` | Páginas de colores, tipografía, espaciado y radios |
 | `references/sync-and-verify.md` | Actualizar tras cambios del Figma y verificar (build + capturas) |
+| `references/docs-best-practices.md` | Buenas prácticas de documentación (Storybook y design systems de referencia) y cómo aplicarlas |
 | `references/gotchas.md` | Errores reales ya encontrados y su causa |
 | `assets/storybook-config/` | `main.ts`, `preview.tsx`, `manager.ts`, `ThemedDocsContainer.tsx`, `preview-head.html`, `docs.css` (sistema de espaciado/lectura), `vercel.json` listos para copiar |
 | `assets/foundations/` | `ColorSwatches`, `TypeScale`, `SpaceScale`, `useTokenValue`, plantilla MDX |
@@ -26,6 +27,7 @@ Principio rector: **el Figma es la fuente de verdad**. Todo lo que no esté en e
 | `scripts/figma_text.py` | Saca el texto de respuestas grandes de `get_design_context` guardadas en disco |
 | `scripts/tokens_to_css.py` | Variables de Figma (claro/oscuro) → `tokens.css` |
 | `scripts/shoot.cjs` | Capturas con Playwright en claro/oscuro, docs o story |
+| `scripts/axe_check.cjs` | Auditoría de accesibilidad (axe, WCAG A/AA) de stories en claro y oscuro |
 
 Los scripts y assets están en `.claude/skills/figma-to-storybook/` (o donde esté instalada la skill); las rutas de las referencias son relativas a esa carpeta.
 
@@ -60,13 +62,15 @@ Carpeta por componente: `X.tsx`, `X.css`, `X.stories.tsx`, `X.mdx`.
 - **Props = propiedades del Figma** (booleanas, variantes, slots). Mismos valores, defaults del Figma.
 - **Docs MDX con la estructura y el idioma del Figma**, sección a sección. Tablas con **vista previa real** del componente en cada fila. Diagrama de anatomía con `AnatomyDiagram`.
 - Stories: Playground (controles), una por variante/propiedad relevante, matriz de variantes, ejemplos de uso del Figma, casos límite (truncado, sin icono…).
+- **Resumen «en un vistazo» arriba**, **Do/Don't con ejemplos reales** y **bloque de uso en código** (`references/docs-best-practices.md`).
+- Clases CSS del componente **con prefijo** (`ds-tag`): evita colisiones con otras librerías (p. ej. el resaltador de código de Storybook).
 - Accesibilidad tal como la documenta el Figma (`aria-hidden` en iconos decorativos, sin `role=button`, etc.).
 
 ### 6. Foundations → `references/foundations.md`
 Una página MDX por foundation (Colores, Tipografía, Espaciado, Radios…) con las plantillas de `assets/foundations/`, que **leen los tokens del CSS** y se actualizan solas al cambiar de tema.
 
 ### 7. Verificar → `references/sync-and-verify.md`
-Siempre, antes de decir "listo": `tsc --noEmit`, `build-storybook`, y **capturas en claro y oscuro** (`scripts/shoot.cjs`) comparadas con el Figma. Un build verde no prueba que se vea bien.
+Siempre, antes de decir "listo": `tsc --noEmit`, `build-storybook`, **`scripts/axe_check.cjs`** (contraste y WCAG en claro y oscuro) y **capturas en claro y oscuro** (`scripts/shoot.cjs`) comparadas con el Figma. Un build verde no prueba que se vea bien.
 
 ### 8. Informar
 Resume en pocas líneas: qué se ha creado/cambiado, **qué viene del Figma y qué es decisión tuya**, discrepancias detectadas (props sin documentar en el Figma, nombres distintos entre Figma y código, typos), y qué no has podido verificar (CDN bloqueadas, fuentes). Commit y push a la rama indicada; no abras PR salvo que lo pidan.

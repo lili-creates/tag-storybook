@@ -1,4 +1,4 @@
-.tag {
+.ds-tag {
   display: inline-flex;
   align-items: center;
   gap: var(--space-md);
@@ -10,14 +10,14 @@
   color: var(--tag-fg);
 }
 
-.tag__group {
+.ds-tag__group {
   display: inline-flex;
   flex: none;
   align-items: center;
   gap: var(--space-xs);
 }
 
-.tag__icon {
+.ds-tag__icon {
   display: inline-flex;
   flex: none;
   align-items: center;
@@ -28,7 +28,7 @@
   line-height: 1;
 }
 
-.tag__label {
+.ds-tag__label {
   font-family: var(--tag-label-family);
   font-size: var(--tag-label-size);
   line-height: var(--tag-label-lh);
@@ -36,7 +36,7 @@
   font-weight: var(--font-weight-bold);
 }
 
-.tag__text {
+.ds-tag__text {
   font-family: var(--tag-body-family);
   font-size: var(--tag-body-size);
   line-height: var(--tag-body-lh);
@@ -45,7 +45,7 @@
 }
 
 /* Tamaños */
-.tag--small {
+.ds-tag--small {
   padding: var(--space-xs) var(--space-md);
   --tag-label-family: var(--label-s-font-family);
   --tag-label-size: var(--label-s-font-size);
@@ -57,7 +57,7 @@
   --tag-body-ls: var(--body-s-letter-spacing);
 }
 
-.tag--default {
+.ds-tag--default {
   padding: var(--space-md) var(--space-lg);
   --tag-label-family: var(--label-m-font-family);
   --tag-label-size: var(--label-m-font-size);
@@ -70,23 +70,23 @@
 }
 
 /* Estados */
-.tag--info {
+.ds-tag--info {
   --tag-bg: var(--semantic-background-signal-info-subtle-default);
   --tag-fg: var(--semantic-content-signal-info-on-subtle);
 }
-.tag--success {
+.ds-tag--success {
   --tag-bg: var(--semantic-background-signal-success-subtle-default);
   --tag-fg: var(--semantic-content-signal-success-on-subtle);
 }
-.tag--warning {
+.ds-tag--warning {
   --tag-bg: var(--semantic-background-signal-warning-subtle-default);
   --tag-fg: var(--semantic-content-signal-warning-on-subtle);
 }
-.tag--error {
+.ds-tag--error {
   --tag-bg: var(--semantic-background-signal-error-subtle-default);
   --tag-fg: var(--semantic-content-signal-error-on-subtle);
 }
-.tag--neutral {
+.ds-tag--neutral {
   --tag-bg: var(--semantic-background-neutral-subtle-default);
   --tag-fg: var(--semantic-content-default-subtle);
 }

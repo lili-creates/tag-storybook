@@ -31,6 +31,10 @@ const STATUS_ICON: Record<TagStatus, string> = {
   neutral: 'ph-package',
 };
 
+/**
+ * Una señal compacta para comunicar estado y contexto. Informa sin pedir una acción:
+ * no es un botón ni un filtro, no entra en el orden de tabulación y no trunca su contenido (siempre hug, una línea).
+ */
 export function Tag({
   size = 'small',
   status = 'info',
@@ -42,21 +46,21 @@ export function Tag({
   className,
 }: TagProps) {
   const customIcon = status === 'neutral' ? icon : undefined;
-  const classes = ['tag', `tag--${size}`, `tag--${status}`, className].filter(Boolean).join(' ');
+  const classes = ['ds-tag', `ds-tag--${size}`, `ds-tag--${status}`, className].filter(Boolean).join(' ');
 
   return (
     <span className={classes}>
       {showLabelGroup && (
-        <span className="tag__group">
+        <span className="ds-tag__group">
           {showIcon && (
-            <span className="tag__icon" aria-hidden="true">
+            <span className="ds-tag__icon" aria-hidden="true">
               {customIcon ?? <i className={`ph ${STATUS_ICON[status]}`} />}
             </span>
           )}
-          <span className="tag__label">{label}</span>
+          <span className="ds-tag__label">{label}</span>
         </span>
       )}
-      <span className="tag__text">{text}</span>
+      <span className="ds-tag__text">{text}</span>
     </span>
   );
 }

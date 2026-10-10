@@ -44,9 +44,9 @@
   scroll-margin-top: 24px;
 }
 
-/* La primera sección (Playground) va pegada al resumen de la página: sin regla ni aire extra */
-.sbdocs-content > h1 + p + h2 {
-  margin-top: 0;
+/* La primera sección (Playground) no lleva regla encima: ya viene tras el resumen de la página */
+.sbdocs-content > h2:first-of-type {
+  margin-top: 56px;
   padding-top: 0;
   border-top: 0;
 }
