@@ -242,7 +242,7 @@ export function AtAGlance({
 /** Contraejemplo: una tag con cierre. La tag no admite acciones (Figma · 07 Cómo se usa la tag). */
 export function TagWithCloseExample() {
   return (
-    <span className="ds-tag ds-tag--small ds-tag--success" aria-hidden="true">
+    <span className="ds-tag ds-tag--default ds-tag--success" aria-hidden="true">
       <span className="ds-tag__group">
         <span className="ds-tag__label">Estado del pedido</span>
       </span>
@@ -256,9 +256,9 @@ export function TagWithCloseExample() {
 export function TagWrappedExample() {
   return (
     <span
-      className="ds-tag ds-tag--small ds-tag--warning"
+      className="ds-tag ds-tag--default ds-tag--warning"
       aria-hidden="true"
-      style={{ whiteSpace: 'normal', alignItems: 'flex-start', width: '100%', maxWidth: 220 }}
+      style={{ whiteSpace: 'normal', alignItems: 'flex-start', width: '100%', maxWidth: 260 }}
     >
       <span className="ds-tag__group">
         <span className="ds-tag__label">Aduana</span>
@@ -277,8 +277,8 @@ export interface DoDontItem {
 
 /**
  * Bloques Do / Don't (Figma · 07 Cómo se usa la tag). Sobrios: fondo neutro, borde fino y título del color del
- * estado. Cada ejemplo va emparejado con su explicación y los ejemplos de un mismo bloque se colocan uno al lado
- * del otro (se apilan solo en pantallas estrechas).
+ * estado. Cada fila empareja la explicación con su ejemplo (uno junto al otro) y las filas de un bloque van una
+ * debajo de otra. En pantallas estrechas, el ejemplo pasa bajo su explicación.
  */
 export function DoDont({ doItems, dontItems }: { doItems: DoDontItem[]; dontItems: DoDontItem[] }) {
   const tone = (token: string) => ({
@@ -297,17 +297,28 @@ export function DoDont({ doItems, dontItems }: { doItems: DoDontItem[]; dontItem
         background: 'rgba(128,128,128,.05)',
       }}
     >
-      <strong style={{ display: 'block', marginBottom: 16, font: '500 24px/30px Figtree, sans-serif', color: t.title }}>
+      <strong style={{ display: 'block', marginBottom: 8, font: '500 24px/30px Figtree, sans-serif', color: t.title }}>
         {title}
       </strong>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+      <div style={{ display: 'grid' }}>
         {items.map((item, i) => (
-          <div key={i} style={{ minWidth: 0, display: 'grid', gap: 12, alignContent: 'start' }}>
+          <div
+            key={i}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gap: '12px 24px',
+              alignItems: 'center',
+              padding: '16px 0',
+              borderTop: i === 0 ? 0 : '1px solid rgba(128,128,128,.25)',
+            }}
+          >
+            <span style={{ fontSize: 15, lineHeight: 1.55 }}>{item.text}</span>
             <div
               style={{
                 display: 'flex',
                 alignItems: 'flex-start',
-                padding: 12,
+                padding: 16,
                 borderRadius: 8,
                 background: 'rgba(128,128,128,.08)',
                 overflowX: 'auto',
@@ -315,7 +326,6 @@ export function DoDont({ doItems, dontItems }: { doItems: DoDontItem[]; dontItem
             >
               {item.example}
             </div>
-            <span style={{ fontSize: 15, lineHeight: 1.55 }}>{item.text}</span>
           </div>
         ))}
       </div>
