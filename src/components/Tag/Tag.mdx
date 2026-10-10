@@ -2,7 +2,7 @@ import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
 import * as TagStories from './Tag.stories';
 import { Tag } from './Tag';
 import { TagAnatomy } from './TagAnatomy';
-import { TokenMatrix, DoDont, AtAGlance, TagWithCloseExample } from './TagDocs';
+import { TokenMatrix, DoDont, AtAGlance, TagWithCloseExample, TagWrappedExample } from './TagDocs';
 
 <Meta of={TagStories} name="Documentación" />
 
@@ -235,13 +235,22 @@ Usa texto plano por defecto. La tag se justifica cuando reconocer un estado, cat
 - Escribe el Text con el mismo criterio en todo el producto: mismo estado, mismas palabras.
 
 <DoDont
-  doExamples={[<Tag size="default" status="success" label="Estado del pedido" text="Confirmado" />]}
-  doItems={['Estado del pedido · Confirmado, junto al título del pedido.']}
-  dontExamples={[
-    <Tag size="default" status="warning" label="Aduana" text="Retenido en aduana a la espera de documentación adicional del transportista" />,
-    <TagWithCloseExample />,
+  doItems={[
+    {
+      example: <Tag size="small" status="success" label="Estado del pedido" text="Confirmado" />,
+      text: 'Estado del pedido · Confirmado, junto al título del pedido.',
+    },
   ]}
-  dontItems={['Un texto largo que obligue a fill o a un salto de línea.', 'Una tag con cierre, chevron o acción.']}
+  dontItems={[
+    {
+      example: <TagWrappedExample />,
+      text: 'Un texto largo que obligue a fill o a un salto de línea.',
+    },
+    {
+      example: <TagWithCloseExample />,
+      text: 'Una tag con cierre, chevron o acción.',
+    },
+  ]}
 />
 
 ### Informar, no actuar

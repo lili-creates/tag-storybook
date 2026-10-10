@@ -242,7 +242,7 @@ export function AtAGlance({
 /** Contraejemplo: una tag con cierre. La tag no admite acciones (Figma · 07 Cómo se usa la tag). */
 export function TagWithCloseExample() {
   return (
-    <span className="ds-tag ds-tag--default ds-tag--success" aria-hidden="true">
+    <span className="ds-tag ds-tag--small ds-tag--success" aria-hidden="true">
       <span className="ds-tag__group">
         <span className="ds-tag__label">Estado del pedido</span>
       </span>
@@ -252,68 +252,80 @@ export function TagWithCloseExample() {
   );
 }
 
-/** Bloques Do / Don't con ejemplos visibles (Figma · 07 Cómo se usa la tag). */
-export function DoDont({
-  doItems,
-  dontItems,
-  doExamples,
-  dontExamples,
-}: {
-  doItems: ReactNode[];
-  dontItems: ReactNode[];
-  doExamples?: ReactNode[];
-  dontExamples?: ReactNode[];
-}) {
-  const box = (bg: string) =>
-    ({
-      flex: '1 1 320px',
-      padding: 24,
-      borderRadius: 12,
-      background: `var(${bg})`,
-      color: 'var(--semantic-content-default-subtle)',
-    }) as const;
-  const list = { margin: '16px 0 0', paddingLeft: 24 } as const;
-  const examples = (nodes?: ReactNode[]) =>
-    nodes && (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          gap: 12,
-          marginTop: 16,
-          padding: 16,
-          borderRadius: 8,
-          background: 'var(--semantic-background-neutral-subtle-default)',
-          overflowX: 'auto',
-          maxWidth: '100%',
-        }}
-      >
-        {nodes.map((n, i) => (
-          <div key={i}>{n}</div>
+/** Contraejemplo: texto largo forzado a fill, con salto de línea (la tag es siempre hug y de una línea). */
+export function TagWrappedExample() {
+  return (
+    <span
+      className="ds-tag ds-tag--small ds-tag--warning"
+      aria-hidden="true"
+      style={{ whiteSpace: 'normal', alignItems: 'flex-start', width: '100%', maxWidth: 220 }}
+    >
+      <span className="ds-tag__group">
+        <span className="ds-tag__label">Aduana</span>
+      </span>
+      <span className="ds-tag__text">Retenido a la espera de documentación adicional del transportista</span>
+    </span>
+  );
+}
+
+export interface DoDontItem {
+  /** Ejemplo visual. */
+  example: ReactNode;
+  /** Qué se hace bien / qué está mal. */
+  text: ReactNode;
+}
+
+/**
+ * Bloques Do / Don't (Figma · 07 Cómo se usa la tag). Sobrios: fondo neutro, borde fino y título del color del
+ * estado. Cada ejemplo va emparejado con su explicación y los ejemplos de un mismo bloque se colocan uno al lado
+ * del otro (se apilan solo en pantallas estrechas).
+ */
+export function DoDont({ doItems, dontItems }: { doItems: DoDontItem[]; dontItems: DoDontItem[] }) {
+  const tone = (token: string) => ({
+    border: `1px solid color-mix(in srgb, var(${token}) 55%, transparent)`,
+    title: `var(${token})`,
+  });
+  const ok = tone('--semantic-content-signal-success-on-subtle');
+  const ko = tone('--semantic-content-signal-error-on-subtle');
+
+  const block = (title: string, t: { border: string; title: string }, items: DoDontItem[]) => (
+    <section
+      style={{
+        padding: 24,
+        borderRadius: 12,
+        border: t.border,
+        background: 'rgba(128,128,128,.05)',
+      }}
+    >
+      <strong style={{ display: 'block', marginBottom: 16, font: '500 24px/30px Figtree, sans-serif', color: t.title }}>
+        {title}
+      </strong>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+        {items.map((item, i) => (
+          <div key={i} style={{ minWidth: 0, display: 'grid', gap: 12, alignContent: 'start' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                padding: 12,
+                borderRadius: 8,
+                background: 'rgba(128,128,128,.08)',
+                overflowX: 'auto',
+              }}
+            >
+              {item.example}
+            </div>
+            <span style={{ fontSize: 15, lineHeight: 1.55 }}>{item.text}</span>
+          </div>
         ))}
       </div>
-    );
+    </section>
+  );
+
   return (
-    <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', margin: '24px 0 40px' }}>
-      <div style={box('--semantic-background-signal-success-subtle-default')}>
-        <strong style={{ font: '500 24px/30px Figtree, sans-serif' }}>Do</strong>
-        {examples(doExamples)}
-        <ul style={list}>
-          {doItems.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
-      </div>
-      <div style={box('--semantic-background-signal-error-subtle-default')}>
-        <strong style={{ font: '500 24px/30px Figtree, sans-serif' }}>Don’t</strong>
-        {examples(dontExamples)}
-        <ul style={list}>
-          {dontItems.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
-      </div>
+    <div style={{ display: 'grid', gap: 24, margin: '24px 0 40px' }}>
+      {block('Do', ok, doItems)}
+      {block('Don’t', ko, dontItems)}
     </div>
   );
 }
