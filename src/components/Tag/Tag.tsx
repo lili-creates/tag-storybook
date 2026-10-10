@@ -5,7 +5,7 @@ export type TagSize = 'small' | 'default';
 export type TagStatus = 'info' | 'success' | 'warning' | 'error' | 'neutral';
 
 export interface TagProps {
-  /** Tamaño: `small` (por defecto) para tablas y listas densas, `default` para tarjetas y vistas de detalle. */
+  /** Tamaño: `small` para tablas y listas densas, `default` (por defecto) para tarjetas y vistas de detalle. */
   size?: TagSize;
   /** Significado operativo de la tag. */
   status?: TagStatus;
@@ -36,7 +36,7 @@ const STATUS_ICON: Record<TagStatus, string> = {
  * no es un botón ni un filtro, no entra en el orden de tabulación y no trunca su contenido (siempre hug, una línea).
  */
 export function Tag({
-  size = 'small',
+  size = 'default',
   status = 'info',
   label = 'label',
   text = 'text',

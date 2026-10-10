@@ -8,7 +8,7 @@ const meta = {
   title: 'Componentes/Tag',
   component: Tag,
   args: {
-    size: 'small',
+    size: 'default',
     status: 'info',
     label: 'label',
     text: 'text',

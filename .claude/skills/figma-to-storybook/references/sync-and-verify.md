@@ -12,7 +12,7 @@
 1. `get_metadata` de la sección y **lista los frames hijos ordenados por `y`**: ese es el orden real de lectura. Pueden aparecer **frames duplicados o heredados** (dos «Anatomía», dos «Uso y contenido»): el orden y el número de sección ("01 /", "02 /"…) deciden cuál vale; si dudas, pregunta.
 2. Lee cada frame por separado y compara **título + número de sección** con el MDX: secciones nuevas, renombradas ("Medidas" → "Otros tokens"), partidas ("Tamaños y estados" → Propiedades / Tokens de color / Otros tokens / Reglas del texto) o eliminadas (modo oscuro como sección propia).
 3. Un cambio de **comportamiento** manda sobre todo: p. ej. «la tag no trunca ni lleva tooltip» obliga a quitar `text-overflow`, la story de truncado y los avisos de tooltip. Cambia el componente, no solo los textos.
-4. Revisa los **defaults** del tipo `Props` (`label = "label"`, `size = "small"`): si cambian, alinea el componente y los `args` de las stories.
+4. Revisa los **defaults** del tipo `Props` (`label = "label"`): si cambian, alinea el componente y los `args` de las stories. **El default que aparece en el código generado por Figma no siempre es el real** (p. ej. `size = "small"` por ser la primera variante, cuando el default de diseño es `default`): confírmalo con el usuario antes de cambiarlo.
 5. Reescribe el MDX en el nuevo orden; mantén tablas con vista previa, Canvas y controles.
 6. Anota en el informe las **discrepancias del Figma** (numeración repetida en la tabla de anatomía, frases que cambian de sentido, espacios dobles en nombres) y qué decisión tomaste.
 
