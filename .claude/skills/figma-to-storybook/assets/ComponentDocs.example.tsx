@@ -175,6 +175,158 @@ export function TokenMatrix() {
   );
 }
 
+type TokenKind = 'space' | 'text';
+
+interface TokenRow {
+  label: string;
+  small: string;
+  default: string;
+  /** `space` dibuja además una barra con el valor; `text` solo muestra el valor resuelto. */
+  kind?: TokenKind;
+}
+
+interface TokenGroup {
+  title: string;
+  /** Estilo de Figma al que corresponde el grupo (p. ej. Label/s/Bold · Label/m/Bold). */
+  styles?: { small: string; default: string };
+  rows: TokenRow[];
+}
+
+const SPACING: TokenGroup = {
+  title: 'Espaciado y radio',
+  rows: [
+    { label: 'Padding vertical', small: '--space-xs', default: '--space-md', kind: 'space' },
+    { label: 'Padding horizontal', small: '--space-md', default: '--space-lg', kind: 'space' },
+    { label: 'Gap icono–Label', small: '--space-xs', default: '--space-xs', kind: 'space' },
+    { label: 'Gap grupo–Text', small: '--space-md', default: '--space-md', kind: 'space' },
+    { label: 'Radio', small: '--radius-semantic-xs', default: '--radius-semantic-xs', kind: 'space' },
+  ],
+};
+
+const typeGroup = (title: string, prefix: 'label' | 'body', weight: string, styles: TokenGroup['styles']): TokenGroup => ({
+  title,
+  styles,
+  rows: [
+    { label: 'Familia', small: `--${prefix}-s-font-family`, default: `--${prefix}-m-font-family`, kind: 'text' },
+    { label: 'Tamaño', small: `--${prefix}-s-font-size`, default: `--${prefix}-m-font-size`, kind: 'text' },
+    { label: 'Interlineado', small: `--${prefix}-s-line-height`, default: `--${prefix}-m-line-height`, kind: 'text' },
+    { label: 'Tracking', small: `--${prefix}-s-letter-spacing`, default: `--${prefix}-m-letter-spacing`, kind: 'text' },
+    { label: 'Peso', small: weight, default: weight, kind: 'text' },
+  ],
+});
+
+const LABEL = typeGroup('Label', 'label', '--font-weight-bold', { small: 'Label/s/Bold', default: 'Label/m/Bold' });
+const TEXT = typeGroup('Text', 'body', '--font-weight-regular', { small: 'Body/s/Regular', default: 'Body/m/Regular' });
+
+/** Un token: nombre + valor resuelto en el modo activo (y barra proporcional para espaciados). */
+function TokenValue({ name, kind }: { name: string; kind?: TokenKind }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [value, setValue] = useState('');
+  useLayoutEffect(() => {
+    if (ref.current) setValue(getComputedStyle(ref.current).getPropertyValue(name).trim());
+  }, [name]);
+  const shown = value.replace(/^'?"?([^,'"]+).*$/, name.includes('font-family') ? '$1' : '$&');
+  const px = parseFloat(value);
+  return (
+    <span ref={ref} style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 12px', minWidth: 0 }}>
+      <code style={{ ...code, wordBreak: 'break-word' }}>var({name})</code>
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, opacity: 0.85 }}>
+        {kind === 'space' && Number.isFinite(px) && (
+          <span
+            aria-hidden="true"
+            style={{ width: Math.max(px, 2) * 2, height: 8, borderRadius: 2, background: 'rgba(128,128,128,.55)', flex: 'none' }}
+          />
+        )}
+        <span>{shown || '—'}</span>
+      </span>
+    </span>
+  );
+}
+
+function TokenCard({ group }: { group: TokenGroup }) {
+  const cols = 'minmax(120px, 0.8fr) minmax(0, 1.1fr) minmax(0, 1.1fr)';
+  const cell = { padding: '10px 0', borderTop: '1px solid rgba(128,128,128,.22)' } as const;
+  return (
+    <section
+      style={{ border: '1px solid rgba(128,128,128,.3)', borderRadius: 12, padding: '20px 24px', overflowX: 'auto' }}
+    >
+      <div style={{ minWidth: 520 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '4px 16px', marginBottom: 12 }}>
+          <strong style={{ font: '700 12px/1.2 Figtree, sans-serif', letterSpacing: '.06em', textTransform: 'uppercase' }}>
+            {group.title}
+          </strong>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: cols, columnGap: 24, alignItems: 'start' }}>
+          <span />
+          <strong style={{ font: '600 13px Figtree, sans-serif', opacity: 0.75, paddingBottom: 8 }}>
+            small{group.styles && <span style={{ fontWeight: 400 }}> · {group.styles.small}</span>}
+          </strong>
+          <strong style={{ font: '600 13px Figtree, sans-serif', opacity: 0.75, paddingBottom: 8 }}>
+            default{group.styles && <span style={{ fontWeight: 400 }}> · {group.styles.default}</span>}
+          </strong>
+          {group.rows.map((r) => (
+            <div key={r.label} style={{ display: 'contents' }}>
+              <span style={{ ...cell, fontWeight: 600, fontSize: 14 }}>{r.label}</span>
+              <div style={cell}>
+                <TokenValue name={r.small} kind={r.kind} />
+              </div>
+              <div style={cell}>
+                <TokenValue name={r.default} kind={r.kind} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** Medidas que no tienen token (Figma · 04 Otros tokens). */
+function UntokenizedCard() {
+  const rows: [string, string, string][] = [
+    ['Icono', '16 × 16 px, sin token de tamaño.', '16 × 16 px, sin token de tamaño.'],
+    ['Altura resultante', '24 px (padding + línea).', '36 px (padding + línea).'],
+    ['Ancho y alto', 'ajustados al contenido (HUG).', 'ajustados al contenido (HUG).'],
+  ];
+  const cell = { padding: '12px 0', borderTop: '1px solid rgba(128,128,128,.22)', fontSize: 14 } as const;
+  return (
+    <section style={{ border: '1px solid rgba(128,128,128,.3)', borderRadius: 12, padding: '20px 24px', overflowX: 'auto' }}>
+      <div style={{ minWidth: 520 }}>
+        <strong style={{ display: 'block', marginBottom: 12, font: '700 12px/1.2 Figtree, sans-serif', letterSpacing: '.06em', textTransform: 'uppercase' }}>
+          Medidas no tokenizadas
+        </strong>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(120px, 0.8fr) minmax(0, 1.1fr) minmax(0, 1.1fr)', columnGap: 24 }}>
+          <span />
+          <strong style={{ font: '600 13px Figtree, sans-serif', opacity: 0.75, paddingBottom: 8 }}>small</strong>
+          <strong style={{ font: '600 13px Figtree, sans-serif', opacity: 0.75, paddingBottom: 8 }}>default</strong>
+          {rows.map(([label, small, def]) => (
+            <div key={label} style={{ display: 'contents' }}>
+              <span style={{ ...cell, fontWeight: 600 }}>{label}</span>
+              <span style={cell}>{small}</span>
+              <span style={cell}>{def}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Otros tokens (Figma · 04): una tarjeta por tema con `small` y `default` en columnas paralelas. Junto a cada
+ * token se muestra el valor que resuelve en tokens.css.
+ */
+export function OtherTokens() {
+  return (
+    <div style={{ display: 'grid', gap: 24, margin: '24px 0 40px' }}>
+      <TokenCard group={SPACING} />
+      <TokenCard group={LABEL} />
+      <TokenCard group={TEXT} />
+      <UntokenizedCard />
+    </div>
+  );
+}
+
 /** Enlace interno a un título de la página (scroll suave; sin animación si el usuario pide reducir movimiento). */
 function SectionLink({ id, children }: { id: string; children: ReactNode }) {
   const onClick = (e: MouseEvent<HTMLAnchorElement>) => {

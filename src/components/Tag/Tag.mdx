@@ -2,7 +2,7 @@ import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
 import * as TagStories from './Tag.stories';
 import { Tag } from './Tag';
 import { TagAnatomy } from './TagAnatomy';
-import { TokenMatrix, DoDont, AtAGlance, TagWithCloseExample, TagWrappedExample } from './TagDocs';
+import { TokenMatrix, OtherTokens, DoDont, AtAGlance, TagWithCloseExample, TagWrappedExample } from './TagDocs';
 
 <Meta of={TagStories} name="Documentación" />
 
@@ -150,30 +150,9 @@ En esta matriz puedes alternar entre modo claro y oscuro con el interruptor, y v
 
 ## 04 · Otros tokens
 
-| | small / tokens | default / tokens |
-| --- | --- | --- |
-| **ESPACIADO Y RADIO** | | |
-| Padding vertical | `var(--space-xs)` | `var(--space-md)` |
-| Padding horizontal | `var(--space-md)` | `var(--space-lg)` |
-| Gap icono–Label | `var(--space-xs)` | `var(--space-xs)` |
-| Gap grupo–Text | `var(--space-md)` | `var(--space-md)` |
-| Radio | `var(--radius-semantic-xs)` | `var(--radius-semantic-xs)` |
-| **LABEL** | estilo Label/s/Bold | estilo Label/m/Bold |
-| Familia | `var(--label-s-font-family)` | `var(--label-m-font-family)` |
-| Tamaño | `var(--label-s-font-size)` | `var(--label-m-font-size)` |
-| Interlineado | `var(--label-s-line-height)` | `var(--label-m-line-height)` |
-| Tracking | `var(--label-s-letter-spacing)` | `var(--label-m-letter-spacing)` |
-| Peso | `var(--font-weight-bold)` | `var(--font-weight-bold)` |
-| **TEXT** | estilo Body/s/Regular | estilo Body/m/Regular |
-| Familia | `var(--body-s-font-family)` | `var(--body-m-font-family)` |
-| Tamaño | `var(--body-s-font-size)` | `var(--body-m-font-size)` |
-| Interlineado | `var(--body-s-line-height)` | `var(--body-m-line-height)` |
-| Tracking | `var(--body-s-letter-spacing)` | `var(--body-m-letter-spacing)` |
-| Peso | `var(--font-weight-regular)` | `var(--font-weight-regular)` |
-| **MEDIDAS NO TOKENIZADAS** | | |
-| Icono | 16 × 16 px, sin token de tamaño. | 16 × 16 px, sin token de tamaño. |
-| Altura resultante | 24 px (padding + línea). | 36 px (padding + línea). |
-| Ancho y alto | ajustados al contenido (HUG). | ajustados al contenido (HUG). |
+Espaciado, radio y estilos de texto de cada tamaño. Junto a cada token se muestra el valor que resuelve.
+
+<OtherTokens />
 
 ## 05 · Reglas del texto
 
