@@ -21,7 +21,8 @@ Principio rector: **el Figma es la fuente de verdad**. Todo lo que no esté en e
 | `references/gotchas.md` | Errores reales ya encontrados y su causa |
 | `assets/storybook-config/` | `main.ts`, `preview.tsx`, `manager.ts`, `ThemedDocsContainer.tsx`, `preview-head.html`, `vercel.json` listos para copiar |
 | `assets/foundations/` | `ColorSwatches`, `TypeScale`, `SpaceScale`, `useTokenValue`, plantilla MDX |
-| `assets/AnatomyDiagram.*` | Diagrama de anatomía con marcadores numerados |
+| `assets/AnatomyDiagram.*` | Diagrama de anatomía con marcadores numerados (mide el DOM real) + `ComponentAnatomy.example.tsx` |
+| `assets/ComponentDocs.example.tsx` | Auxiliares de docs: matriz de tokens claro/oscuro, bloques Do/Don't |
 | `scripts/figma_text.py` | Saca el texto de respuestas grandes de `get_design_context` guardadas en disco |
 | `scripts/tokens_to_css.py` | Variables de Figma (claro/oscuro) → `tokens.css` |
 | `scripts/shoot.cjs` | Capturas con Playwright en claro/oscuro, docs o story |
@@ -72,7 +73,7 @@ Resume en pocas líneas: qué se ha creado/cambiado, **qué viene del Figma y qu
 
 ## Reglas
 - **No inventes contenido de diseño**: textos de docs, valores de tokens y nombres vienen del Figma. Si falta algo, impleméntalo con criterio, márcalo y dilo.
-- **Actualizar ≠ rehacer**: al sincronizar, compara con lo existente y toca solo lo que cambió (`references/sync-and-verify.md`).
+- **Actualizar ≠ rehacer**: al sincronizar, compara con lo existente y toca solo lo que cambió (`references/sync-and-verify.md`). Cuando el Figma reestructura la doc (secciones nuevas/renumeradas), se reescribe el MDX entero siguiendo el nuevo orden, conservando las mejoras de UX.
 - **Modo oscuro es parte del trabajo**, no un extra: tokens, docs, interfaz y diagramas.
 - **Idioma**: docs en el idioma del Figma; código y nombres de props en inglés (anota ambos si el Figma usa otros nombres).
 - Reutiliza antes de crear: tokens y componentes que ya existan en el proyecto.

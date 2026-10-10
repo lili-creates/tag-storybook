@@ -1,144 +1,237 @@
-import { Meta, Canvas, Controls, Story } from '@storybook/addon-docs/blocks';
+import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
 import * as TagStories from './Tag.stories';
 import { Tag } from './Tag';
 import { TagAnatomy } from './TagAnatomy';
+import { TokenMatrix, DoDont } from './TagDocs';
 
 <Meta of={TagStories} name="Documentación" />
 
 # Tag
 
-Tag informativa de solo lectura: **icono + label + texto**. Tamaños `small` | `default` y estados `info` | `success` | `warning` | `error` | `neutral`.
+Una señal compacta para comunicar estado y contexto. Informa sin pedir una acción.
 
 <Canvas of={TagStories.Playground} />
 <Controls of={TagStories.Playground} />
 
 ## 01 · Anatomía
 
-Tres elementos, una lectura. El label identifica el objeto y el texto expresa su estado. El icono es opcional y refuerza el significado. Cuando el contexto ya identifica el objeto, el grupo Label + icono puede ocultarse sin perder legibilidad; mantén label y texto como nodos editables separados.
+Elementos dentro del componente.
 
 <TagAnatomy />
 
 | # | Tipo | Elemento | Notas |
 | :-: | :-: | --- | --- |
-| 1 | ▢ | Etiqueta | Organiza horizontalmente el grupo de etiquetas opcionales y la descripción; fondo de color de estado con esquinas de 4 px. |
-| 2 | ▢ | contenedor | Agrupa el icono y la etiqueta; se muestra a través de `Mostrar grupo de etiquetas` (`showLabelGroup`). El icono se controla de forma independiente mediante `Mostrar icono` (`showIcon`) y se puede intercambiar a través de `Icono` (`icon`). |
-| 3 | **T** | Texto | "Descripción" — texto de apoyo, editable a través de la propiedad `Texto` (`text`). |
+| **1** | ▢ | container | Auto layout horizontal que agrupa el label group y el Text. Fondo del color del estado, con esquinas de 4 px. Siempre en hug. |
+| **2** | ▢ | label group | Agrupa el icono y el Label. Opcional, se controla con Show label group. |
+| **3** | ◇ | icon | Opcional dentro del label group. Se controla con Show icon y se intercambia con Icon. |
+| **4** | **T** | label | Texto en negrita que identifica el objeto. Dentro del label group. |
+| **5** | **T** | text | Texto de apoyo que expresa el estado o el contexto. Siempre visible, editable con Text. |
 
-Auto layout horizontal · ancho y alto ajustados al contenido · Text siempre visible; grupo Label + icono opcional (`showLabelGroup`) e icono opcional dentro del grupo (`showIcon`).
+Auto layout horizontal · ancho y alto ajustados al contenido (hug) · Text siempre visible; label group opcional (Show label group) e icono opcional dentro del grupo (Show icon).
 
 ## 02 · Propiedades
 
-### Tamaño (size)
+Qué se puede ajustar y cambiar.
+
+Los nombres de las propiedades de Figma se corresponden con estas props del componente: `size`, `status`, `showLabelGroup` (Show label group), `showIcon` (Show icon), `label`, `text` e `icon`.
+
+### size
 
 | Valor | Vista | Uso |
 | --- | --- | --- |
-| `small` | <Tag size="small" status="info" label="Label" text="Description" /> | Tablas y listas densas |
-| `default` | <Tag size="default" status="info" label="Label" text="Description" /> | Tarjetas y vistas de detalle |
+| `small` | <Tag size="small" status="info" label="label" text="text" /> | tablas y listas densas |
+| `default` | <Tag size="default" status="info" label="label" text="text" /> | tarjetas y vistas de detalle |
 
-### Estado (status)
-
-| Valor | Vista | Uso | Icono |
-| --- | --- | --- | --- |
-| `info` | <Tag status="info" label="Label" text="Description" /> | Información de contexto o progreso | Info |
-| `success` | <Tag status="success" label="Label" text="Description" /> | Resultado completado correctamente | CheckCircle |
-| `warning` | <Tag status="warning" label="Label" text="Description" /> | Situación que requiere atención | Warning |
-| `error` | <Tag status="error" label="Label" text="Description" /> | Fallo o resultado no completado | XCircle |
-| `neutral` | <Tag status="neutral" label="Label" text="Description" /> | Clasificación sin valoración semántica | Configurable |
-
-### Contenido
-
-Contenido editable: `label` y `text`.
-
-- `showIcon` muestra u oculta el icono dentro del grupo (`true` por defecto).
-- `showLabelGroup` controla la visibilidad del contenedor que agrupa icono y Label (`true` por defecto).
-- `icon` permite sustituirlo **solo en neutral**; los estados de señal conservan su icono semántico.
-
-### Grupo Label + icono (showLabelGroup)
+### status
 
 | Valor | Vista | Uso |
 | --- | --- | --- |
-| `true` | <Tag size="small" status="info" label="Label" text="Description" /> | Muestra el contenedor que agrupa icono y Label. Text permanece visible. |
-| `false` | <Tag size="small" status="info" label="Label" text="Description" showLabelGroup={false} /> | Oculta el grupo Label + icono. Text sigue visible. `showIcon` no aplica cuando el grupo está oculto. |
+| `info` | <Tag status="info" label="label" text="text" /> | información de contexto o progreso · icono Info |
+| `success` | <Tag status="success" label="label" text="text" /> | resultado completado correctamente · icono CheckCircle |
+| `warning` | <Tag status="warning" label="label" text="text" /> | situación que requiere atención · icono Warning |
+| `error` | <Tag status="error" label="label" text="text" /> | fallo o resultado no completado · icono XCircle |
+| `neutral` | <Tag status="neutral" label="label" text="text" /> | clasificación sin valoración semántica · icono configurable |
 
-En tablas densas, permite evitar repetir el tipo de dato en cada fila cuando el encabezado o contexto ya lo identifica. Usa `false` solo si Text y contexto siguen siendo comprensibles sin depender del color.
+<Canvas of={TagStories.Estados} />
+
+### Show label group
+
+| Valor | Vista | Uso |
+| --- | --- | --- |
+| `true` | <Tag size="small" status="info" label="label" text="text" /> | Muestra el contenedor que agrupa icono y Label. Text permanece visible. |
+| `false` | <Tag size="small" status="info" label="label" text="text" showLabelGroup={false} /> | Oculta el grupo Label + icono. Text sigue visible. Show icon no aplica cuando el grupo está oculto. |
+
+En tablas densas, permite evitar repetir el tipo de dato en cada fila cuando el encabezado o contexto ya lo identifica. Usa false solo si Text y contexto siguen siendo comprensibles sin depender del color.
 
 <Canvas of={TagStories.SoloTexto} />
 
+### Show icon (label group)
+
+| Valor | Vista | Uso |
+| --- | --- | --- |
+| `true` | <Tag size="small" status="info" label="label" text="text" /> | Muestra el icono |
+| `false` | <Tag size="small" status="info" label="label" text="text" showIcon={false} /> | Oculta el icono. |
+
+<Canvas of={TagStories.SinIcono} />
+
+### label
+
+| Valor | Uso |
+| --- | --- |
+| `text` | Identifica el objeto. Corto. |
+
+### text
+
+| Valor | Uso |
+| --- | --- |
+| `text` | Siempre visible. Expresa el estado o el contexto. Corto. |
+
+### icon
+
+| Valor | Uso |
+| --- | --- |
+| `instance swap` | Solo se cambia en neutral. En los estados de señal no se sustituye. |
+
+<Canvas of={TagStories.IconoNeutralPersonalizado} />
+
+### width
+
+| Valor | Uso |
+| --- | --- |
+| `hug` | Nunca fill ni ancho fijo, ni en el componente ni por restricciones del contenedor. |
+
+### height
+
+| Valor | Uso |
+| --- | --- |
+| `hug` | Nunca fill ni ancho fijo, ni en el componente ni por restricciones del contenedor. |
+
 <Canvas of={TagStories.MatrizDeVariantes} />
 
-### Variables por estado
+## 03 · Tokens de color
 
-| status | Background | Text e Icon |
+### Modo claro
+
+<TokenMatrix />
+
+### Modo oscuro
+
+Selecciona Dark en la colección Colors del contenedor. Los tokens son los mismos; cambian sus valores con el modo.
+
+En Storybook, usa el selector **Tema** de la barra superior para ver todo el sitio en modo oscuro. Esta matriz se muestra siempre en oscuro:
+
+<TokenMatrix dark />
+
+## 04 · Otros tokens
+
+| | small / tokens | default / tokens |
 | --- | --- | --- |
-| info | `--semantic-background-signal-info-subtle-default` | `--semantic-content-signal-info-on-subtle` |
-| success | `--semantic-background-signal-success-subtle-default` | `--semantic-content-signal-success-on-subtle` |
-| warning | `--semantic-background-signal-warning-subtle-default` | `--semantic-content-signal-warning-on-subtle` |
-| error | `--semantic-background-signal-error-subtle-default` | `--semantic-content-signal-error-on-subtle` |
-| neutral | `--semantic-background-neutral-subtle-default` | `--semantic-content-default-subtle` |
+| **ESPACIADO Y RADIO** | | |
+| Padding vertical | `var(--space-xs)` | `var(--space-md)` |
+| Padding horizontal | `var(--space-md)` | `var(--space-lg)` |
+| Gap icono–Label | `var(--space-xs)` | `var(--space-xs)` |
+| Gap grupo–Text | `var(--space-md)` | `var(--space-md)` |
+| Radio | `var(--radius-semantic-xs)` | `var(--radius-semantic-xs)` |
+| **LABEL** | estilo Label/s/Bold | estilo Label/m/Bold |
+| Familia | `var(--label-s-font-family)` | `var(--label-m-font-family)` |
+| Tamaño | `var(--label-s-font-size)` | `var(--label-m-font-size)` |
+| Interlineado | `var(--label-s-line-height)` | `var(--label-m-line-height)` |
+| Tracking | `var(--label-s-letter-spacing)` | `var(--label-m-letter-spacing)` |
+| Peso | `var(--font-weight-bold)` | `var(--font-weight-bold)` |
+| **TEXT** | estilo Body/s/Regular | estilo Body/m/Regular |
+| Familia | `var(--body-s-font-family)` | `var(--body-m-font-family)` |
+| Tamaño | `var(--body-s-font-size)` | `var(--body-m-font-size)` |
+| Interlineado | `var(--body-s-line-height)` | `var(--body-m-line-height)` |
+| Tracking | `var(--body-s-letter-spacing)` | `var(--body-m-letter-spacing)` |
+| Peso | `var(--font-weight-regular)` | `var(--font-weight-regular)` |
+| **MEDIDAS NO TOKENIZADAS** | | |
+| Icono | 16 × 16 px, sin token de tamaño. | 16 × 16 px, sin token de tamaño. |
+| Altura resultante | 24 px (padding + línea). | 36 px (padding + línea). |
+| Ancho y alto | ajustados al contenido (HUG). | ajustados al contenido (HUG). |
 
-### Comportamiento del texto
+## 05 · Reglas del texto
 
-Una sola línea, sin saltos. Ancho ajustado al contenido, con un máximo igual al espacio disponible del contenedor. Acorta la redacción antes de truncar. Solo **Text** se trunca con puntos suspensivos; Label e icono permanecen completos cuando `showLabelGroup` es `true`.
+- Una sola línea, sin saltos.
+- El ancho siempre se ajusta al contenido (hug). Nunca fill.
+- La tag no trunca ni recorta su contenido. Por eso el texto debe ser corto: una palabra o una frase breve, tanto en Label como en Text.
+- Si no cabe en una línea, se reescribe. No se fuerza el componente.
+- Si el mensaje necesita más espacio o explicación, la tag no es el componente adecuado.
 
-<Canvas of={TagStories.TextoTruncado} />
+## 06 · Cuándo se usa la tag
 
-Si Text se trunca, muestra su contenido completo en un tooltip accesible al pasar el cursor y al enfocar el elemento asociado mediante teclado. La tag sigue siendo informativa y no entra en el orden de tabulación: utiliza un elemento asociado que ya sea enfocable. Si no existe, muestra el texto completo por otra vía accesible y no dependas de un tooltip solo por hover. Asocia el tooltip a su activador con `aria-describedby` y `role="tooltip"`; permite cerrarlo con Escape y mantenerlo visible al mover el cursor sobre él. Conserva el texto completo para los lectores de pantalla.
+### ¿Tag o texto plano?
 
-### Medidas
+Usa texto plano por defecto. La tag se justifica cuando reconocer un estado, categoría o incidencia ayuda a interpretar, localizar o priorizar información de la operación. Si un dato categórico no basta, debe aportar utilidad para la lista.
 
-| | small | default |
-| --- | --- | --- |
-| Padding vertical | `--space-xs` (4px) | `--space-md` (8px) |
-| Padding horizontal | `--space-md` (8px) | `--space-lg` (12px) |
-| Gap icono–Label | `--space-xs` | `--space-xs` |
-| Gap grupo–Text | `--space-md` | `--space-md` |
-| Radio | `--radius-semantic-xs` (4px) | `--radius-semantic-xs` (4px) |
-| Label | Label/s/Bold · 12/16 | Label/m/Bold · 14/20 |
-| Text | Body/s/Regular · 12/16 | Body/m/Regular · 14/20 |
-| Icono (no tokenizado) | 16 × 16 px | 16 × 16 px |
-| Altura resultante | 24 px | 36 px |
-
-## 03 · Modo oscuro
-
-El modo oscuro se activa con el modo Dark de la colección Colors y conserva los tokens documentados. Usa el selector **Tema** de la barra superior de Storybook para verlo.
-
-## 04 · ¿Tag o texto plano?
-
-Usa texto plano por defecto. La tag se justifica cuando reconocer un estado, categoría o incidencia ayuda a interpretar, localizar o priorizar información de la operación. Ser un dato categórico no basta: debe aportar utilidad para la tarea.
-
-**Ejemplos logísticos**
+### Ejemplos logísticos
 
 - ENV-10482, transportista DHL, destino Madrid, 24 palés y fechas: texto plano por defecto.
 - Retenido en aduana en una tabla de envíos: tag, porque el usuario necesita localizarlo entre cientos de filas.
 
-**En tablas densas**
+### En tablas densas
 
 - Revisa la columna o tabla completa, no solo una celda.
-- Usa `small` si la tag está justificada y omite el icono si no aporta lectura.
+- Usa small si la tag está justificada y omite el icono si no aporta lectura.
 - No conviertas cada metadato en tag ni decores cada valor rutinario.
 - Preserva la comparación entre filas y evita que la tag rompa la densidad de datos.
 
-**Ante solicitud de color por estética**
+### Ante solicitud de color por estética
 
 - Pregúntate qué distinción o decisión operativa facilita.
 - Si no existe, mantén texto plano.
 - Neutral solo si la etiqueta ya está justificada.
 - Nunca elijas info/success/warning/error para combinar con una paleta.
-- Si se necesita nueva clasificación cromática funcional, documenta su significado y consistencia a nivel de sistema antes de añadir colores fuera de estas variantes.
+- Si se necesita nueva clasificación cromática funcional, coméntalo con el equipo antes de realizar ningún cambio. Una vez aprobado, documenta su significado y consistencia a nivel de sistema antes de añadir colores fuera de estas variantes.
 
-## 05 · Criterios de estado
+## 07 · Cómo se usa la tag
 
-Una vez justificada la tag, elige el estado según el significado operativo. Usa el mismo icono para el mismo objeto en todo el producto.
+### Configuración paso a paso
+
+1. Elige status según el significado operativo, no por el color.
+2. Elige size: small en tablas y listas densas, default en tarjetas y vistas de detalle.
+3. Escribe Text (siempre visible) y, si hace falta, Label. Ambos cortos.
+4. Decide Show label group y Show icon. Si el contexto ya identifica al objeto, oculta el grupo.
+5. Comprueba que el ancho es hug y que cabe en una línea. Si no cabe, reescribe el texto.
+
+### Combinaciones
+
+- Completa: icono + Label + Text. Cuando la tag identifica al objeto y expresa su estado.
+- Sin icono: Label + Text. Cuando el icono no aporta lectura, por ejemplo en tablas densas.
+- Solo Text: Show label group en false. Cuando el contexto ya dice de qué se trata.
+
+<Canvas of={TagStories.Combinaciones} />
+
+### Redacción
+
+- Escribe un Label concreto y un Text breve. Evita la jerga.
+- Una palabra o una frase breve en cada uno. Si no cabe en una línea, se reescribe (ver Comportamiento del texto).
+- Evita duplicar información entre Label y Text: si el Label dice “Estado del pedido”, el Text dice “Confirmado”, no “El pedido está confirmado”.
+- Escribe el Text con el mismo criterio en todo el producto: mismo estado, mismas palabras.
+
+<DoDont
+  doItems={['Estado del pedido · Confirmado, junto al título del pedido.']}
+  dontItems={['Un texto largo que obligue a fill o a un salto de línea.', 'Una tag con cierre, chevron o acción.']}
+/>
+
+### Informar, no actuar
+
+La tag no es un botón ni un filtro.
+
+No añadas cierre, chevron, selección ni interacción. Si necesitas una acción, usa un control dedicado.
+
+## 08 · Criterios de estado
+
+Una vez justificada la tag, elige el estado según el significado operativo:
 
 | Estado | Vista | Criterio |
 | --- | --- | --- |
-| info | <Tag size="small" status="info" label="info" text="ejemplo" /> | Información de contexto o progreso. |
-| success | <Tag size="small" status="success" label="success" text="ejemplo" /> | Resultado completado correctamente. |
-| warning | <Tag size="small" status="warning" label="warning" text="ejemplo" /> | Situación que requiere atención. |
-| error | <Tag size="small" status="error" label="error" text="ejemplo" /> | Fallo o resultado no completado. |
-| neutral | <Tag size="small" status="neutral" label="neutral" text="ejemplo" /> | Clasificación sin valoración semántica. Usa neutral cuando el estado importa pero el color no debe añadir significado. |
+| **info** | <Tag size="small" status="info" label="info" text="text" /> | Información de contexto o progreso. |
+| **success** | <Tag size="small" status="success" label="success" text="text" /> | Resultado completado correctamente. |
+| **warning** | <Tag size="small" status="warning" label="warning" text="text" /> | Situación que requiere atención. |
+| **error** | <Tag size="small" status="error" label="error" text="text" /> | Fallo o resultado no completado. |
+| **neutral** | <Tag size="small" status="neutral" label="neutral" text="text" /> | Clasificación sin valoración semántica. Usa neutral cuando el estado importa pero el color no debe añadir significado. |
 
-**Ejemplos de estado**
+### Ejemplos de estado
 
 - Retenido en aduana → warning
 - Entrega fallida → error
@@ -146,33 +239,43 @@ Una vez justificada la tag, elige el estado según el significado operativo. Usa
 - Entregado → success o texto plano según la tabla
 - Refrigerado o Mercancía peligrosa → neutral si ayuda a manipulación o planificación; no confundas categoría con incidencia.
 
-**Icono neutral vs. estados de señal**
+### Icono neutral vs. estados de señal
 
 En neutral no hay valoración que transmitir: el icono deja de indicar severidad y pasa a identificar el objeto o el contexto (por ejemplo, un paquete para un pedido). Por eso se puede sustituir.
 
-<Canvas of={TagStories.IconoNeutralPersonalizado} />
+En los estados de señal, el icono comunica severidad y no se puede cambiar.
 
-En los estados de señal, el icono comunica severidad y es fijo. Usa siempre el mismo icono para el mismo objeto en todo el producto y elígelo del set de iconos del sistema.
+Usa siempre el mismo icono para el mismo objeto en todo el producto y elígelo del set de iconos del sistema.
 
-## 06 · Uso y contenido
+## 09 · Accesibilidad
 
-Coloca la tag junto al elemento que describe. Escribe un label concreto y un texto breve; evita duplicar la misma información en ambos. Oculta el grupo Label + icono solo si el contexto ya identifica el objeto y Text sigue siendo comprensible sin depender del color.
+### No depender solo del color
+
+El estado debe expresarse con Text.
+
+Si el grupo Label + icono está oculto, Text sigue comprensible. Si el icono está oculto, el Text debe bastar para comprender. Cuando el icono está visible, es decorativo y el Text lleva el significado (en el componente, el icono lleva `aria-hidden="true"`).
+
+### Contraste y lectura
+
+El contraste está asegurado con las variables creadas.
+
+El icono, al ser decorativo, no requiere umbral mínimo. Mantén el orden de lectura según los elementos visibles: con label group visible, el orden es Label, texto; cuando label group es false, el orden es solo texto.
+
+### Sin truncado ni tooltip
+
+El contenido completo está siempre visible y lo leen los lectores de pantalla tal cual. No añadas un tooltip para recuperar texto recortado: si el texto no cabe, se reescribe.
+
+### Sin semántica de botón
+
+No uses `role="button"`, `tabindex` ni cursor de acción. La tag es contenido informativo y no entra en el orden de tabulación. Si el estado cambia en vivo, anúncialo desde el contenedor con `role="status"` cuando sea necesario.
+
+## 10 · Ejemplos de uso
 
 <Canvas of={TagStories.EjemplosDeUso} />
 
-`label` y `text` son propiedades de texto, no variantes. `showIcon = true` por defecto; permite ocultar el icono dentro del grupo Label + icono. `showLabelGroup = true` por defecto; permite ocultar el grupo Label + icono. `icon` solo se aplica a neutral. Acorta la redacción antes de truncar.
+## 11 · Referencias
 
-<Canvas of={TagStories.SinIcono} />
-
-**Informar, no actuar.** La tag no es un botón ni un filtro. No añadas cierre, chevron, selección o interacción. Si necesitas una acción, usa un control dedicado.
-
-## 07 · Accesibilidad
-
-- **No depender solo del color.** El estado debe estar expresado en Text; el significado nunca debe depender únicamente del color. Si el grupo Label + icono está oculto, Text y el contexto deben bastar para comprenderlo. Cuando el icono está visible (`showLabelGroup = true` y `showIcon = true`), es decorativo: márcalo con `aria-hidden="true"`.
-- **Contraste y lectura.** Verifica al menos 4,5:1 entre el texto (label y text) y el fondo del estado correspondiente. El icono, al ser decorativo, no requiere umbral mínimo. Mantén el orden de lectura según los elementos visibles: cuando `showLabelGroup` es `true`, el orden es label, texto; cuando es `false`, el orden es texto.
-- **Sin semántica de botón.** No uses `role="button"`, `tabindex` ni cursor de acción. La tag es contenido informativo y no entra en el orden de tabulación. Si el estado cambia en vivo, anúncialo desde el contenedor con `role="status"` cuando sea necesario.
-
-## 08 · Referencias
+Información que ha servido para la elaboración de esta documentación.
 
 Criterio propio para este producto, adaptado de:
 

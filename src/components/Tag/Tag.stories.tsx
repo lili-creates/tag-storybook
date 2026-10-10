@@ -8,10 +8,10 @@ const meta = {
   title: 'Componentes/Tag',
   component: Tag,
   args: {
-    size: 'default',
+    size: 'small',
     status: 'info',
-    label: 'Label',
-    text: 'Description',
+    label: 'label',
+    text: 'text',
     showLabelGroup: true,
     showIcon: true,
   },
@@ -68,20 +68,15 @@ export const IconoNeutralPersonalizado: Story = {
   },
 };
 
-export const TextoTruncado: Story = {
-  name: 'Text truncado',
-  args: {
-    status: 'warning',
-    label: 'Aduana',
-    text: 'Retenido en aduana a la espera de documentación adicional del transportista',
-  },
-  decorators: [
-    (Story) => (
-      <div style={{ width: 260 }}>
-        <Story />
-      </div>
-    ),
-  ],
+export const Combinaciones: Story = {
+  parameters: { layout: 'padded' },
+  render: (args) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
+      <Tag {...args} label="Estado del pedido" text="Confirmado" status="success" />
+      <Tag {...args} label="Estado del pedido" text="Confirmado" status="success" showIcon={false} />
+      <Tag {...args} text="Confirmado" status="success" showLabelGroup={false} />
+    </div>
+  ),
 };
 
 export const MatrizDeVariantes: Story = {
@@ -109,16 +104,14 @@ export const EjemplosDeUso: Story = {
   name: 'Ejemplos de uso',
   parameters: { layout: 'padded' },
   render: () => (
-    <div style={{ display: 'grid', gap: 16, width: 420, font: '400 14px Figtree, sans-serif' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <div style={{ font: '700 24px Figtree, sans-serif' }}>Pedido #1048</div>
-          <div>Entrega prevista · 6 de octubre</div>
-        </div>
-        <Tag status="success" label="Estado del pedido" text="Confirmado" />
+    <div style={{ display: 'flex', alignItems: 'center', gap: 24, font: '400 14px Figtree, sans-serif' }}>
+      <div style={{ display: 'grid', gap: 8, justifyItems: 'start' }}>
+        <span style={{ font: '500 14px Figtree, sans-serif', opacity: 0.7 }}>DETALLE DEL PEDIDO</span>
+        <span style={{ font: '700 40px/48px Figtree, sans-serif' }}>Pedido #1048</span>
+        <Tag size="default" status="success" label="Estado del pedido" text="Confirmado" />
       </div>
-      <hr style={{ width: '100%', border: 0, borderTop: '1px solid rgba(128,128,128,.3)' }} />
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <span aria-hidden="true" style={{ alignSelf: 'stretch', borderLeft: '1px solid rgba(128,128,128,.3)' }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: 48 }}>
         <span style={{ fontWeight: 500 }}>Lámpara de mesa Alba</span>
         <Tag size="small" status="warning" label="Stock" text="Últimas unidades" />
       </div>

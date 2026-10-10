@@ -31,11 +31,15 @@ Playground (todas las props con controles) · una story por prop/variante releva
 - No dejes secciones "mías" mezcladas con las del Figma. Si añades algo (p. ej. tabla de variables), ponlo en una subsección clara y menciónalo en el informe.
 
 ## Anatomía (patrón del Figma: preview numerado + tabla)
-1. `AnatomyDiagram` (assets) envuelve el componente; `top/left/right` = números de los marcadores.
-2. Añade en `AnatomyDiagram.css` los selectores de contorno de cada parte (`.anatomy .tag__group`, `.anatomy .tag__text`).
-3. Tabla `# | Tipo | Elemento | Notas` con el texto literal del Figma (`▢` frame, **T** texto).
-4. Ajusta el `translateX(±8px)` de las líneas laterales al padding del componente para que lleguen al contorno.
-5. Líneas de 1px: usa **bordes** (`border-top: 1px solid`), no `background` ni `transform` con fracciones: se difuminan a gris.
+1. `AnatomyDiagram` (assets) envuelve el componente y **mide el DOM real**: le pasas `outlines` (selectores de las partes a contornear) y `callouts` `{ n, target, side, length, offset }`. Los 5 marcadores del Tag (container arriba, label group abajo, icon a la izquierda, label arriba desplazado, text a la derecha) son el ejemplo (`ComponentAnatomy.example.tsx`).
+2. Copia la geometría del Figma: lado desde el que sale cada línea y su largo (`Line` en px del Figma); usa `offset` para separar marcadores que chocarían.
+3. Tabla `# | Tipo | Elemento | Notas` con el texto literal del Figma (`▢` frame, `◇` instancia/icono, **T** texto). **Numera según el diagrama** si la tabla del Figma repite números (y avísalo).
+4. Posiciones redondeadas a enteros y líneas de 1px como `div` con fondo: nítidas. Re-mide con `ResizeObserver` y `document.fonts.ready` (el ancho del texto cambia al cargar la fuente).
+5. Los colores del diagrama vienen del Figma (marcadores `--data-chart-error-subtle`, texto negro); si no hay valor oscuro, usa el mismo en ambos modos y dilo.
+
+## Auxiliares de docs (`ComponentDocs.example.tsx`)
+- `TokenMatrix`: matriz estado × tamaño × variables, con `dark` para forzarla en modo oscuro (envuelve en `data-theme="dark"`; `tokens.css` define el modo oscuro en `[data-theme='dark']`, no solo en `:root`).
+- `DoDont`: dos cajas verde/roja con los tokens de success/error.
 
 ## Calidad
 `tsc --noEmit` limpio · sin colores literales en el CSS del componente · props tipadas con JSDoc (alimentan la tabla de controles) · `README` corto con cómo arrancar.

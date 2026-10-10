@@ -38,7 +38,8 @@
   --semantic-content-default-subtle: #1e1c1a;
 }
 
-:root[data-theme='dark'] {
+:root[data-theme='dark'],
+[data-theme='dark'] {
   --semantic-background-signal-info-subtle-default: #0f3b48;
   --semantic-content-signal-info-on-subtle: #92d1ed;
   --semantic-background-signal-success-subtle-default: #1e4115;

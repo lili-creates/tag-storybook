@@ -17,3 +17,8 @@
 | Sesión se cierra al parar el servidor | `pkill -f` casó con el shell | `fuser -k <puerto>/tcp` |
 | URL de story con tilde no se encuentra | ID con acentos, URL-encoded | `%C3%B3` o fija `id` explícito |
 | Docs de la story duplicadas | `autodocs` + MDX propio | quitar `tags: ['autodocs']` |
+| Marcadores del diagrama descolocados con otra fuente | Posiciones fijas en px calculadas con la fuente de diseño | `AnatomyDiagram` mide el DOM y re-mide al cargar fuentes |
+| Matriz "modo oscuro" no se ve oscura con el tema claro | Tokens oscuros definidos solo en `:root[data-theme='dark']` | Definirlos también en `[data-theme='dark']` y envolver en `data-theme="dark"` |
+| La doc del Figma cambia y el código sigue truncando | Se actualizaron textos pero no el comportamiento | Releer reglas de texto/accesibilidad y aplicar al componente (quitar ellipsis, story, tooltip) |
+| Dos frames "Anatomía" / "Uso y contenido" en el Figma | Frames heredados tras reorganizar | Ordenar por `y` y por número de sección; preguntar si hay duda |
+| Defaults de `label`/`text` distintos tras sincronizar | Cambian en el tipo `Props` de `get_design_context` | Alinear componente y `args` de stories |

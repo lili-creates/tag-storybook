@@ -2,10 +2,9 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-md);
-  max-width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
   border-radius: var(--radius-semantic-xs);
+  /* Siempre hug y en una sola línea; la tag no trunca ni recorta su contenido. */
   white-space: nowrap;
   background: var(--tag-bg);
   color: var(--tag-fg);
@@ -38,9 +37,6 @@
 }
 
 .tag__text {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
   font-family: var(--tag-body-family);
   font-size: var(--tag-body-size);
   line-height: var(--tag-body-lh);

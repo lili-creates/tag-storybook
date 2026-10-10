@@ -5,17 +5,17 @@ export type TagSize = 'small' | 'default';
 export type TagStatus = 'info' | 'success' | 'warning' | 'error' | 'neutral';
 
 export interface TagProps {
-  /** Tamaño: `small` para tablas y listas densas, `default` para tarjetas y vistas de detalle. */
+  /** Tamaño: `small` (por defecto) para tablas y listas densas, `default` para tarjetas y vistas de detalle. */
   size?: TagSize;
   /** Significado operativo de la tag. */
   status?: TagStatus;
-  /** Nombre breve del objeto (texto en negrita). */
-  label: string;
-  /** Estado o detalle conciso (texto regular). Es lo único que se trunca. */
-  text: string;
-  /** Muestra u oculta el grupo icono + label. Si es `false`, la tag muestra solo el Text. */
+  /** Nombre breve del objeto (texto en negrita, dentro del label group). Una palabra o una frase breve. */
+  label?: string;
+  /** Texto de apoyo que expresa el estado o el contexto. Siempre visible. Corto: la tag no trunca. */
+  text?: string;
+  /** Show label group: muestra u oculta el grupo icono + label. Si es `false`, la tag muestra solo el Text. */
   showLabelGroup?: boolean;
-  /** Muestra u oculta el icono. No tiene efecto si `showLabelGroup` es `false`. */
+  /** Show icon: muestra u oculta el icono dentro del label group. No aplica si `showLabelGroup` es `false`. */
   showIcon?: boolean;
   /** Sustituye el icono. Solo se aplica a `neutral`; los estados de señal conservan su icono semántico. */
   icon?: ReactNode;
@@ -32,10 +32,10 @@ const STATUS_ICON: Record<TagStatus, string> = {
 };
 
 export function Tag({
-  size = 'default',
+  size = 'small',
   status = 'info',
-  label,
-  text,
+  label = 'label',
+  text = 'text',
   showLabelGroup = true,
   showIcon = true,
   icon,
