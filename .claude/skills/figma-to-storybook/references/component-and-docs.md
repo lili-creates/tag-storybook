@@ -34,8 +34,9 @@ Playground (todas las props con controles) · una story por prop/variante releva
 1. `AnatomyDiagram` (assets) envuelve el componente y **mide el DOM real**: le pasas `outlines` (selectores de las partes a contornear) y `callouts` `{ n, target, side, length, offset }`. Los 5 marcadores del Tag (container arriba, label group abajo, icon a la izquierda, label arriba desplazado, text a la derecha) son el ejemplo (`ComponentAnatomy.example.tsx`).
 2. Copia la geometría del Figma: lado desde el que sale cada línea y su largo (`Line` en px del Figma); usa `offset` para separar marcadores que chocarían.
 3. Tabla `# | Tipo | Elemento | Notas` con el texto literal del Figma (`▢` frame, `◇` instancia/icono, **T** texto). **Numera según el diagrama** si la tabla del Figma repite números (y avísalo).
-4. Posiciones redondeadas a enteros y líneas de 1px como `div` con fondo: nítidas. Re-mide con `ResizeObserver` y `document.fonts.ready` (el ancho del texto cambia al cargar la fuente).
-5. Los colores del diagrama vienen del Figma (marcadores `--data-chart-error-subtle`, texto negro); si no hay valor oscuro, usa el mismo en ambos modos y dilo.
+4. **Números de los marcadores**: centrados ópticamente (tinta del glifo, no caja del texto) y con tipografía fija inline; `AnatomyDiagram` ya lo hace. Compruébalo midiendo píxeles de un recorte a alta resolución (`deviceScaleFactor` 6) y comparando el centro de la tinta con el del círculo.
+5. Posiciones redondeadas a enteros y líneas de 1px como `div` con fondo: nítidas. Re-mide con `ResizeObserver` y `document.fonts.ready` (el ancho del texto cambia al cargar la fuente).
+6. Los colores del diagrama vienen del Figma (marcadores `--data-chart-error-subtle`, texto negro); si no hay valor oscuro, usa el mismo en ambos modos y dilo.
 
 ## Auxiliares de docs (`ComponentDocs.example.tsx`)
 - `TokenMatrix`: **una sola** matriz estado × tamaño × variables con interruptor Claro/Oscuro (los tokens son los mismos y solo cambian los valores). Arranca en el tema de Storybook y lo sigue; muestra junto a cada variable su valor resuelto en el modo elegido. Para que un subárbol pueda forzar un modo, `tokens.css` define **ambos** modos en `:root, [data-theme='light']` y `[data-theme='dark']` (no solo en `:root`). El interruptor se pinta según el tema de la PÁGINA, no el de la matriz.

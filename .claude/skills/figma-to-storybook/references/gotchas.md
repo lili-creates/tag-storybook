@@ -29,3 +29,4 @@
 | Interruptor ilegible al cambiar de modo | Su color dependía del modo de la matriz | Pintarlo según el tema de la página |
 | Espacios que desaparecen en los bloques de código de la doc (`<Tagstatus=…`) | Clase global `.tag` del componente colisiona con `.token.tag` del resaltador (inline-flex + nowrap) | Prefijar las clases del componente (`ds-tag`) |
 | Tarjeta huérfana en la rejilla del resumen | `auto-fit` con mínimo pequeño da 3 columnas para 4 tarjetas | `minmax(300px, 1fr)` → 2×2 |
+| Números dentro de los círculos del diagrama no se ven centrados | El centrado por caja (flex) alinea la caja del texto, no la tinta del glifo; cada dígito tiene hueco lateral distinto y cada fuente métricas distintas; además los estilos de la página pisaban la fuente | Fijar tipografía inline y compensar con la tinta real medida con canvas (`measureText`), re-midiendo al cargar fuentes. Verificar midiendo píxeles, no a ojo |

@@ -1,7 +1,54 @@
-import { useCallback, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import './AnatomyDiagram.css';
 
 const MARKER = 33;
+
+/** Tipografía fija del número: así no depende de los estilos de la página que lo aloja. */
+const MARKER_FONT: CSSProperties = {
+  fontFamily: "'Figtree', 'Nunito Sans', system-ui, sans-serif",
+  fontSize: 14,
+  fontWeight: 700,
+  lineHeight: 1,
+  letterSpacing: 0,
+};
+
+/**
+ * Número centrado ÓPTICAMENTE dentro del círculo. El centrado por caja (flex) alinea la caja del texto, no la
+ * tinta del glifo: cada dígito tiene un hueco lateral distinto (el «1») y cada fuente un ascender/descender
+ * distinto. Se mide la tinta real con canvas y se compensa con un desplazamiento (se re-mide al cargar fuentes).
+ */
+function MarkerNumber({ n }: { n: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [shift, setShift] = useState({ x: 0, y: 0 });
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const apply = () => {
+      const cs = getComputedStyle(el);
+      const ctx = document.createElement('canvas').getContext('2d');
+      if (!ctx) return;
+      ctx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      const m = ctx.measureText(String(n));
+      if (!m.fontBoundingBoxAscent) return; // navegador sin métricas de fuente: se deja el centrado por caja
+      // horizontal: centro de la tinta frente al centro de la caja de avance
+      const x = m.width / 2 - (m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2;
+      // vertical: centro de la tinta frente al centro del área de contenido de la línea
+      const y =
+        (m.fontBoundingBoxDescent - m.fontBoundingBoxAscent) / 2 -
+        (m.actualBoundingBoxDescent - m.actualBoundingBoxAscent) / 2;
+      setShift({ x: Math.round(x * 4) / 4, y: Math.round(y * 4) / 4 });
+    };
+    apply();
+    document.fonts?.ready.then(apply);
+  }, [n]);
+
+  return (
+    <span ref={ref} style={{ display: 'block', transform: `translate(${shift.x}px, ${shift.y}px)` }}>
+      {n}
+    </span>
+  );
+}
 
 export type CalloutSide = 'top' | 'bottom' | 'left' | 'right';
 
@@ -123,8 +170,8 @@ export function AnatomyDiagram({ children, callouts, outlines = [''], label }: A
             <span key={`l${key}`} className="anatomy__line" style={l} />
           ))}
           {geometry.markers.map((m) => (
-            <span key={`m${m.key}`} className="anatomy__marker" style={{ left: m.left, top: m.top }}>
-              {m.n}
+            <span key={`m${m.key}`} className="anatomy__marker" style={{ left: m.left, top: m.top, ...MARKER_FONT }}>
+              <MarkerNumber n={m.n} />
             </span>
           ))}
         </div>
