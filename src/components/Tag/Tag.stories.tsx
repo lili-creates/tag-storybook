@@ -19,6 +19,8 @@ const meta = {
     size: { control: 'inline-radio', options: SIZES },
     status: { control: 'select', options: STATUSES },
     icon: { control: false },
+    // Vía de escape de código, no es una propiedad de diseño del Figma: fuera de la tabla de controles
+    className: { table: { disable: true } },
   },
 } satisfies Meta<typeof Tag>;
 
