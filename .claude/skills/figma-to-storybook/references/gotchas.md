@@ -24,3 +24,6 @@
 | Defaults de `label`/`text` distintos tras sincronizar | Cambian en el tipo `Props` de `get_design_context` | Alinear componente y `args` de stories |
 | Tabla de controles se sale en móvil (scroll horizontal de página) | `docblock-argstable` de Storybook no es responsive | `display:block; overflow-x:auto` en `docs.css` (<760px) |
 | Texto de la primera columna invisible en una zona forzada a oscuro | Storybook fija el color de `td/th` | `color: inherit` en esas celdas |
+| Dos tablas (claro y oscuro) con los mismos tokens | Duplica contenido y no deja ver qué cambia | Una matriz con interruptor + valor resuelto (`TokenMatrix`) |
+| Matriz «clara» sale oscura con el tema global oscuro | Los tokens claros solo estaban en `:root` y el subárbol hereda los oscuros | Definir los claros también en `[data-theme='light']` |
+| Interruptor ilegible al cambiar de modo | Su color dependía del modo de la matriz | Pintarlo según el tema de la página |

@@ -1,5 +1,6 @@
 /* Tokens extraídos del archivo de Figma "One more tag" (colección Colors, modos Light / Dark). */
-:root {
+:root,
+[data-theme='light'] {
   --space-xs: 4px;
   --space-md: 8px;
   --space-lg: 12px;

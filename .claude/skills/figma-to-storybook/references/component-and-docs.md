@@ -38,7 +38,7 @@ Playground (todas las props con controles) · una story por prop/variante releva
 5. Los colores del diagrama vienen del Figma (marcadores `--data-chart-error-subtle`, texto negro); si no hay valor oscuro, usa el mismo en ambos modos y dilo.
 
 ## Auxiliares de docs (`ComponentDocs.example.tsx`)
-- `TokenMatrix`: matriz estado × tamaño × variables, con `dark` para forzarla en modo oscuro (envuelve en `data-theme="dark"`; `tokens.css` define el modo oscuro en `[data-theme='dark']`, no solo en `:root`).
+- `TokenMatrix`: **una sola** matriz estado × tamaño × variables con interruptor Claro/Oscuro (los tokens son los mismos y solo cambian los valores). Arranca en el tema de Storybook y lo sigue; muestra junto a cada variable su valor resuelto en el modo elegido. Para que un subárbol pueda forzar un modo, `tokens.css` define **ambos** modos en `:root, [data-theme='light']` y `[data-theme='dark']` (no solo en `:root`). El interruptor se pinta según el tema de la PÁGINA, no el de la matriz.
 - `DoDont`: dos cajas verde/roja con los tokens de success/error.
 
 ## Estructura que no genera dudas
