@@ -5,7 +5,7 @@ Resumen de lo que hacen los design systems de referencia y la guía de Storybook
 ## 1. Estructura de página
 - **Plantilla de Storybook**: Título → Subtítulo → Descripción → Primary → Controls → Stories. En un MDX propio se replica con `Meta` + `Canvas` + `Controls`. **Añade siempre un JSDoc al componente** (alimenta la descripción, las tablas de props y herramientas externas).
 - **Misma estructura en todos los componentes** (GOV.UK, Carbon con sus pestañas Usage/Style/Code/Accessibility, Spectrum con Options/Behaviors/Content/Accessibility). Si el Figma ya define las secciones, respétalas; añade solo lo que falta (resumen, código).
-- **Resumen «en un vistazo» arriba** (4 tarjetas: úsala para · no la uses para · al configurarla · accesibilidad). Es un resumen DERIVADO del Figma: cita en cada tarjeta de qué sección sale y no inventes reglas nuevas.
+- **Resumen «en un vistazo» arriba** (4 tarjetas: úsala para · no la uses para · al configurarla · accesibilidad). Es un resumen DERIVADO del Figma: cita en cada tarjeta de qué sección sale y no inventes reglas nuevas. **Esas referencias deben ser enlaces** a la sección (`SectionLink` en `ComponentDocs.example.tsx`): el id de cada título es el que genera Storybook (`06--cuándo-se-usa-la-tag`); compruébalos con el DOM, no de memoria. Scroll suave salvo `prefers-reduced-motion`.
 
 ## 2. Contenido
 - **Cuándo usar / cuándo NO** con la alternativa nombrada (GOV.UK: «solo estado, nunca enlaces ni botones»; Atlassian y Polaris separan tag de lozenge/badge según sea estado o categoría interactiva; Carbon: las tags de solo lectura quedan fuera del orden de tabulación).

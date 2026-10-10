@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react';
 import { Tag, type TagStatus } from './Tag';
 
 /** Componentes auxiliares solo para la documentación (Tag.mdx). */
@@ -175,8 +175,29 @@ export function TokenMatrix() {
   );
 }
 
-/** Resumen «en un vistazo»: cuatro respuestas rápidas antes de leer la página completa. */
-export function AtAGlance({ items }: { items: { title: string; text: ReactNode; ref?: string }[] }) {
+/** Enlace interno a un título de la página (scroll suave; sin animación si el usuario pide reducir movimiento). */
+function SectionLink({ id, children }: { id: string; children: ReactNode }) {
+  const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    const target = document.getElementById(id);
+    if (!target) return; // si el id no existe, se deja el comportamiento normal del enlace
+    e.preventDefault();
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    history.replaceState(null, '', `#${id}`);
+  };
+  return (
+    <a href={`#${id}`} onClick={onClick} style={{ fontSize: 13, fontWeight: 600, textUnderlineOffset: 3 }}>
+      {children}
+    </a>
+  );
+}
+
+/** Resumen «en un vistazo»: cuatro respuestas rápidas con enlaces a las secciones de las que salen. */
+export function AtAGlance({
+  items,
+}: {
+  items: { title: string; text: ReactNode; refs?: { label: string; id: string }[] }[];
+}) {
   return (
     <div
       style={{
@@ -203,7 +224,15 @@ export function AtAGlance({ items }: { items: { title: string; text: ReactNode; 
             {item.title}
           </strong>
           <span style={{ fontSize: 15, lineHeight: 1.55 }}>{item.text}</span>
-          {item.ref && <span style={{ fontSize: 12, opacity: 0.65 }}>{item.ref}</span>}
+          {item.refs && (
+            <span style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 16px' }}>
+              {item.refs.map((r) => (
+                <SectionLink key={r.id} id={r.id}>
+                  {r.label} →
+                </SectionLink>
+              ))}
+            </span>
+          )}
         </div>
       ))}
     </div>
