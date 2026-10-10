@@ -1,0 +1,200 @@
+/*
+ * Sistema de lectura para las páginas de documentación (MDX).
+ * Escala de espaciado de 8px · jerarquía clara entre secciones (h2) y subsecciones (h3).
+ * Todo está acotado a .sbdocs-content para no afectar a las stories ni a la UI de Storybook.
+ * Usa transparencias (rgba) para que funcione igual en claro y en oscuro.
+ */
+.sbdocs.sbdocs-wrapper {
+  padding: 64px 48px 120px;
+}
+
+.sbdocs.sbdocs-content {
+  max-width: 880px;
+  font-size: 16px;
+  line-height: 1.65;
+  --doc-rule: rgba(128, 128, 128, 0.3);
+  --doc-surface: rgba(128, 128, 128, 0.08);
+}
+
+/* ── Títulos ─────────────────────────────────────────────── */
+.sbdocs-content > h1 {
+  margin: 0 0 8px;
+  font-size: 44px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+/* La primera línea tras el título es el resumen: más grande y apagada */
+.sbdocs-content > h1 + p {
+  margin: 0 0 40px;
+  font-size: 19px;
+  line-height: 1.55;
+  opacity: 0.8;
+}
+
+/* Cada sección (01, 02, …) empieza con una regla y mucho aire por encima */
+.sbdocs-content > h2 {
+  margin: 80px 0 8px;
+  padding: 40px 0 0;
+  border: 0;
+  border-top: 1px solid var(--doc-rule);
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  scroll-margin-top: 24px;
+}
+
+/* El subtítulo de la sección (lo que dice el Figma bajo el título) */
+.sbdocs-content > h2 + p {
+  margin: 0 0 32px;
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+.sbdocs-content > h3 {
+  margin: 56px 0 16px;
+  font-size: 22px;
+  line-height: 1.3;
+  scroll-margin-top: 24px;
+}
+
+/* Si la subsección va pegada a su sección, menos aire */
+.sbdocs-content > h2 + h3,
+.sbdocs-content > h2 + p + h3 {
+  margin-top: 32px;
+}
+
+/* Lista o tabla justo debajo del título de sección: separarla del título */
+.sbdocs-content > h2 + ul,
+.sbdocs-content > h2 + ol {
+  margin-top: 24px;
+}
+
+/* ── Texto y listas ──────────────────────────────────────── */
+.sbdocs-content p,
+.sbdocs-content li {
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.sbdocs-content p {
+  margin: 0 0 16px;
+}
+
+.sbdocs-content ul,
+.sbdocs-content ol {
+  margin: 0 0 24px;
+  padding-left: 24px;
+}
+
+.sbdocs-content li {
+  margin: 0 0 8px;
+  padding-left: 4px;
+}
+
+.sbdocs-content li:last-child {
+  margin-bottom: 0;
+}
+
+.sbdocs-content :not(pre) > code {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.875em;
+  word-break: break-word;
+}
+
+.sbdocs-content a {
+  text-underline-offset: 3px;
+}
+
+/* ── Tablas de contenido (las de Markdown, no la de controles) ── */
+.sbdocs-content table:not(.docblock-argstable) {
+  display: table;
+  width: 100%;
+  margin: 24px 0 40px;
+  border: 1px solid var(--doc-rule);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.sbdocs-content table:not(.docblock-argstable) tr,
+.sbdocs-content table:not(.docblock-argstable) tr:nth-of-type(2n) {
+  background: transparent;
+}
+
+.sbdocs-content table:not(.docblock-argstable) th {
+  padding: 12px 16px;
+  border: 0;
+  background: var(--doc-surface);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-align: left;
+  text-transform: none;
+}
+
+.sbdocs-content table:not(.docblock-argstable) td {
+  padding: 16px;
+  border: 0;
+  border-top: 1px solid var(--doc-rule);
+  vertical-align: middle;
+}
+
+/* Primera columna: nombre del valor, siempre en una línea y algo más marcada */
+.sbdocs-content table:not(.docblock-argstable) td:first-child {
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* Filas de grupo (p. ej. «ESPACIADO Y RADIO»): primera celda con texto y el resto vacío */
+.sbdocs-content table:not(.docblock-argstable) tr:has(> td:nth-child(2):empty) td {
+  padding-top: 20px;
+  padding-bottom: 8px;
+  background: var(--doc-surface);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+
+/* ── Bloques de ejemplo (Canvas) y controles ─────────────── */
+.sbdocs-content .sbdocs-preview {
+  margin: 24px 0 8px;
+}
+
+.sbdocs-content .docblock-argstable {
+  margin: 32px 0 0;
+}
+
+/* Diagrama de anatomía */
+.sbdocs-content .anatomy {
+  margin: 24px 0 8px;
+}
+
+/* ── Tablas largas en pantallas estrechas: que scrollen en vez de romper el layout ── */
+@media (max-width: 760px) {
+  .sbdocs.sbdocs-wrapper {
+    padding: 32px 20px 80px;
+  }
+  .sbdocs-content > h1 {
+    font-size: 34px;
+  }
+  .sbdocs-content > h2 {
+    margin-top: 64px;
+    font-size: 26px;
+  }
+  .sbdocs-content table:not(.docblock-argstable),
+  .sbdocs-content .docblock-argstable {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* Zonas forzadas a modo oscuro dentro de la página (p. ej. matriz de tokens): el texto hereda del bloque */
+.sbdocs-content [data-theme='dark'] table,
+.sbdocs-content [data-theme='dark'] th,
+.sbdocs-content [data-theme='dark'] td {
+  color: inherit;
+}

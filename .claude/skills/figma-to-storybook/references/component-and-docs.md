@@ -41,5 +41,11 @@ Playground (todas las props con controles) · una story por prop/variante releva
 - `TokenMatrix`: matriz estado × tamaño × variables, con `dark` para forzarla en modo oscuro (envuelve en `data-theme="dark"`; `tokens.css` define el modo oscuro en `[data-theme='dark']`, no solo en `:root`).
 - `DoDont`: dos cajas verde/roja con los tokens de success/error.
 
+## Estructura que no genera dudas
+- **Una sección del Figma = un `h2`** («01 · Anatomía»); su primera línea es el subtítulo. Dentro, `h3` por tema. Pon el **Playground** como primera sección (`## Playground`) para que los controles no floten sin título.
+- **Compacta lo pequeño**: propiedades de una sola fila (label, text, icon, width, height) van en UNA tabla `Propiedad | Valor | Uso` bajo un `h3` («Contenido», «Medidas»), no en un `h3` cada una.
+- **Tablas**: primera columna = nombre corto; una columna de **vista previa**; última = descripción. Filas de grupo (texto + celdas vacías) para tablas largas de tokens.
+- No mezcles tamaños de texto a mano en el MDX: los estilos salen de `docs.css`.
+
 ## Calidad
 `tsc --noEmit` limpio · sin colores literales en el CSS del componente · props tipadas con JSDoc (alimentan la tabla de controles) · `README` corto con cómo arrancar.

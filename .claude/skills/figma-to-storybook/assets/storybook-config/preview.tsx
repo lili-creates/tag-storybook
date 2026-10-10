@@ -1,9 +1,11 @@
 import type { Decorator, Preview } from '@storybook/react-vite';
 import '../src/styles/tokens.css';
+import './docs.css';
 import { ThemedDocsContainer, applyTheme } from './ThemedDocsContainer';
 
 const withTheme: Decorator = (Story, context) => {
-  applyTheme(context.globals.theme === 'dark' ? 'dark' : 'light');
+  const theme = context.globals.theme === 'dark' ? 'dark' : 'light';
+  applyTheme(theme);
   return <Story />;
 };
 
@@ -28,10 +30,7 @@ const preview: Preview = {
     layout: 'centered',
     controls: { expanded: true },
     docs: { container: ThemedDocsContainer, toc: { headingSelector: 'h2, h3', title: 'En esta página' } },
-    options: {
-      // Foundations primero, luego componentes; dentro de cada uno, Documentación antes que las stories.
-      storySort: { order: ['Foundations', 'Componentes', ['*', ['Documentación', 'Playground', '*']]] },
-    },
+    options: { storySort: { order: ['Componentes', ['Tag', ['Documentación', 'Playground', 'Estados', 'Tamaños']]] } },
   },
 };
 

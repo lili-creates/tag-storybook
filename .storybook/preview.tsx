@@ -1,5 +1,6 @@
 import type { Decorator, Preview } from '@storybook/react-vite';
 import '../src/styles/tokens.css';
+import './docs.css';
 import { ThemedDocsContainer, applyTheme } from './ThemedDocsContainer';
 import { Analytics } from '@vercel/analytics/react';
 

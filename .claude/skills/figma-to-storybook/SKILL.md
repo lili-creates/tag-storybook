@@ -19,7 +19,7 @@ Principio rector: **el Figma es la fuente de verdad**. Todo lo que no esté en e
 | `references/foundations.md` | Páginas de colores, tipografía, espaciado y radios |
 | `references/sync-and-verify.md` | Actualizar tras cambios del Figma y verificar (build + capturas) |
 | `references/gotchas.md` | Errores reales ya encontrados y su causa |
-| `assets/storybook-config/` | `main.ts`, `preview.tsx`, `manager.ts`, `ThemedDocsContainer.tsx`, `preview-head.html`, `vercel.json` listos para copiar |
+| `assets/storybook-config/` | `main.ts`, `preview.tsx`, `manager.ts`, `ThemedDocsContainer.tsx`, `preview-head.html`, `docs.css` (sistema de espaciado/lectura), `vercel.json` listos para copiar |
 | `assets/foundations/` | `ColorSwatches`, `TypeScale`, `SpaceScale`, `useTokenValue`, plantilla MDX |
 | `assets/AnatomyDiagram.*` | Diagrama de anatomía con marcadores numerados (mide el DOM real) + `ComponentAnatomy.example.tsx` |
 | `assets/ComponentDocs.example.tsx` | Auxiliares de docs: matriz de tokens claro/oscuro, bloques Do/Don't |

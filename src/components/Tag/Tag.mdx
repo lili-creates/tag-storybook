@@ -10,6 +10,10 @@ import { TokenMatrix, DoDont } from './TagDocs';
 
 Una señal compacta para comunicar estado y contexto. Informa sin pedir una acción.
 
+## Playground
+
+Cambia las propiedades en la tabla de controles y comprueba el resultado.
+
 <Canvas of={TagStories.Playground} />
 <Controls of={TagStories.Playground} />
 
@@ -74,37 +78,24 @@ En tablas densas, permite evitar repetir el tipo de dato en cada fila cuando el 
 
 <Canvas of={TagStories.SinIcono} />
 
-### label
+### Contenido
 
-| Valor | Uso |
-| --- | --- |
-| `text` | Identifica el objeto. Corto. |
-
-### text
-
-| Valor | Uso |
-| --- | --- |
-| `text` | Siempre visible. Expresa el estado o el contexto. Corto. |
-
-### icon
-
-| Valor | Uso |
-| --- | --- |
-| `instance swap` | Solo se cambia en neutral. En los estados de señal no se sustituye. |
+| Propiedad | Valor | Uso |
+| --- | --- | --- |
+| label | `text` | Identifica el objeto. Corto. |
+| text | `text` | Siempre visible. Expresa el estado o el contexto. Corto. |
+| icon | `instance swap` | Solo se cambia en neutral. En los estados de señal no se sustituye. |
 
 <Canvas of={TagStories.IconoNeutralPersonalizado} />
 
-### width
+### Medidas
 
-| Valor | Uso |
-| --- | --- |
-| `hug` | Nunca fill ni ancho fijo, ni en el componente ni por restricciones del contenedor. |
+| Propiedad | Valor | Uso |
+| --- | --- | --- |
+| width | `hug` | Nunca fill ni ancho fijo, ni en el componente ni por restricciones del contenedor. |
+| height | `hug` | Nunca fill ni ancho fijo, ni en el componente ni por restricciones del contenedor. |
 
-### height
-
-| Valor | Uso |
-| --- | --- |
-| `hug` | Nunca fill ni ancho fijo, ni en el componente ni por restricciones del contenedor. |
+### Todas las variantes
 
 <Canvas of={TagStories.MatrizDeVariantes} />
 

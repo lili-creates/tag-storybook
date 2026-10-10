@@ -22,3 +22,5 @@
 | La doc del Figma cambia y el código sigue truncando | Se actualizaron textos pero no el comportamiento | Releer reglas de texto/accesibilidad y aplicar al componente (quitar ellipsis, story, tooltip) |
 | Dos frames "Anatomía" / "Uso y contenido" en el Figma | Frames heredados tras reorganizar | Ordenar por `y` y por número de sección; preguntar si hay duda |
 | Defaults de `label`/`text` distintos tras sincronizar | Cambian en el tipo `Props` de `get_design_context` | Alinear componente y `args` de stories |
+| Tabla de controles se sale en móvil (scroll horizontal de página) | `docblock-argstable` de Storybook no es responsive | `display:block; overflow-x:auto` en `docs.css` (<760px) |
+| Texto de la primera columna invisible en una zona forzada a oscuro | Storybook fija el color de `td/th` | `color: inherit` en esas celdas |

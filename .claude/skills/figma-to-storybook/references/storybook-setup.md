@@ -23,6 +23,14 @@ npm i -D storybook @storybook/react-vite @storybook/addon-docs vite typescript @
 
 Probar: `?globals=theme:dark` en la URL y cambiar en caliente desde la toolbar.
 
+## Legibilidad de las docs (`docs.css`)
+Storybook trae tipografía apretada para MDX (14px, tablas de 13px, títulos sin jerarquía). `assets/storybook-config/docs.css` (importado en `preview.tsx`) define un sistema de lectura con escala de 8px, todo acotado a `.sbdocs-content`:
+- Columna de 880px, cuerpo 16px/1.65, listas con 8px entre ítems.
+- `h1` 44px y resumen en grande; **cada sección (`h2`) empieza con una regla y 80px de aire**; `h3` con 56px por encima (32px si va pegado al `h2`); el párrafo tras un `h2` es el subtítulo de la sección (18px, atenuado).
+- Tablas de Markdown con borde redondeado, cabecera sombreada, 16px de padding, primera columna en negrita y sin salto, filas de grupo (primera celda con texto y el resto vacío) como cabeceras.
+- Transparencias (`rgba`) en bordes y fondos para que sirva en claro y oscuro; `scroll` interno de tablas en <760px (incluida la de controles).
+Ajusta los valores aquí, no en cada MDX.
+
 ## Docs
 - `parameters.docs.toc`: índice lateral ("En esta página") con `h2, h3`.
 - `storySort`: Foundations → Componentes; dentro, `Documentación` → `Playground` → resto.
