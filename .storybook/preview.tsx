@@ -1,11 +1,17 @@
 import type { Decorator, Preview } from '@storybook/react-vite';
 import '../src/styles/tokens.css';
 import { ThemedDocsContainer, applyTheme } from './ThemedDocsContainer';
+import { Analytics } from '@vercel/analytics/react';
 
 const withTheme: Decorator = (Story, context) => {
   const theme = context.globals.theme === 'dark' ? 'dark' : 'light';
   applyTheme(theme);
-  return <Story />;
+  return (
+    <>
+      <Story />
+      <Analytics />
+    </>
+  );
 };
 
 const preview: Preview = {
