@@ -15,6 +15,8 @@ Resumen de lo que hacen los design systems de referencia y la guía de Storybook
 - Estados del componente: documenta cuáles tiene y cuáles **no** (una tag informativa no tiene hover/focus/disabled: dilo).
 - Estado/ciclo de vida (Alpha/Beta/Stable en Washington Post, Morningstar) y versión/changelog (Rivet): úsalo solo si el equipo lo define; **no lo inventes**. Si falta, propónselo al usuario.
 
+- **Tokens semánticos: nombre, no valor.** No pongas el hex (ni px de un color) junto a una variable semántica: lleva a hardcodearlo. Muestra el nombre del token y, como mucho, una muestra de color; si el sistema tiene primitivos, enseña a cuál apunta. Los valores resueltos de espaciado/tipografía son más discutibles: confirma con el equipo si quieren verlos.
+
 ## 3. Legibilidad (ver `docs.css`)
 - Textos cortos y escaneables; una idea por párrafo; listas para reglas; tablas con vista previa; ejemplos interactivos antes que descripciones.
 - Jerarquía visual clara entre secciones (h2 con regla y aire) y subsecciones (h3); TOC lateral.

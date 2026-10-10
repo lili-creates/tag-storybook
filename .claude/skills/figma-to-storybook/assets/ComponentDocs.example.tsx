@@ -37,31 +37,28 @@ type Mode = 'light' | 'dark';
 const currentTheme = (): Mode =>
   typeof document !== 'undefined' && document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
 
-/** Fila «Background / Text / Icon»: nombre del token, muestra y valor resuelto en el modo activo. */
-function TokenLine({ label, name, mode }: { label: string; name: string; mode: Mode }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [value, setValue] = useState('');
-  useLayoutEffect(() => {
-    if (ref.current) setValue(getComputedStyle(ref.current).getPropertyValue(name).trim());
-  }, [name, mode]);
+/**
+ * Fila «Background / Text / Icon»: nombre del token semántico y una muestra de su color en el modo activo.
+ * NO se muestra el valor (hex): el token semántico apunta a un primitivo y se usa siempre por su nombre;
+ * enseñar el hex invitaría a copiarlo a mano.
+ */
+function TokenLine({ label, name }: { label: string; name: string }) {
   return (
-    <span ref={ref} style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: 8, alignItems: 'baseline' }}>
+    <span style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: 8, alignItems: 'center' }}>
       <span style={{ fontSize: 13, fontWeight: 600, opacity: 0.8 }}>{label}</span>
-      <span style={{ display: 'grid', gap: 4 }}>
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+        <span
+          aria-hidden="true"
+          style={{
+            width: 16,
+            height: 16,
+            borderRadius: 4,
+            flex: 'none',
+            background: `var(${name})`,
+            boxShadow: 'inset 0 0 0 1px rgba(128,128,128,.5)',
+          }}
+        />
         <code style={code}>var({name})</code>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, opacity: 0.8 }}>
-          <span
-            aria-hidden="true"
-            style={{
-              width: 12,
-              height: 12,
-              borderRadius: 3,
-              background: `var(${name})`,
-              boxShadow: 'inset 0 0 0 1px rgba(128,128,128,.5)',
-            }}
-          />
-          {value}
-        </span>
       </span>
     </span>
   );
@@ -70,7 +67,8 @@ function TokenLine({ label, name, mode }: { label: string; name: string; mode: M
 /**
  * Matriz de variantes con sus tokens (Figma · 03 Tokens de color). Los tokens son los mismos en los dos
  * modos y solo cambian sus valores, así que hay UNA matriz con un interruptor Claro / Oscuro. Arranca en el
- * modo activo de Storybook y lo sigue si se cambia el selector Tema de la barra.
+ * modo activo de Storybook y lo sigue si se cambia el selector Tema de la barra. Se muestran los nombres de los
+ * tokens semánticos y una muestra de color, no los valores.
  */
 export function TokenMatrix() {
   const [mode, setMode] = useState<Mode>(currentTheme);
@@ -161,9 +159,9 @@ export function TokenMatrix() {
                 </td>
                 <td style={cell}>
                   <div style={{ display: 'grid', gap: 12 }}>
-                    <TokenLine label="Background" name={TOKENS[status].bg} mode={mode} />
-                    <TokenLine label="Text" name={TOKENS[status].fg} mode={mode} />
-                    <TokenLine label="Icon" name={TOKENS[status].fg} mode={mode} />
+                    <TokenLine label="Background" name={TOKENS[status].bg} />
+                    <TokenLine label="Text" name={TOKENS[status].fg} />
+                    <TokenLine label="Icon" name={TOKENS[status].fg} />
                   </div>
                 </td>
               </tr>
