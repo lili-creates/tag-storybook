@@ -44,6 +44,13 @@
   scroll-margin-top: 24px;
 }
 
+/* La primera sección (Playground) va pegada al resumen de la página: sin regla ni aire extra */
+.sbdocs-content > h1 + p + h2 {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
 /* El subtítulo de la sección (lo que dice el Figma bajo el título) */
 .sbdocs-content > h2 + p {
   margin: 0 0 32px;
