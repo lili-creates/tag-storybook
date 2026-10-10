@@ -46,6 +46,7 @@ Playground (todas las props con controles) · una story por prop/variante releva
 - **Una sección del Figma = un `h2`** («01 · Anatomía»); su primera línea es el subtítulo. Dentro, `h3` por tema. Pon el **Playground** como primera sección (`## Playground`) para que los controles no floten sin título.
 - **Compacta lo pequeño**: propiedades de una sola fila (label, text, icon, width, height) van en UNA tabla `Propiedad | Valor | Uso` bajo un `h3` («Contenido», «Medidas»), no en un `h3` cada una.
 - **Tablas**: primera columna = nombre corto; una columna de **vista previa**; última = descripción. Filas de grupo (texto + celdas vacías) para tablas largas de tokens.
+- **No repitas con un `Canvas` lo que la tabla de encima ya muestra con vista previa.** Reserva el `Canvas` para lo que la tabla no puede enseñar (un icono sustituido, combinaciones, un ejemplo de uso real). Las stories siguen disponibles en la barra lateral.
 - No mezcles tamaños de texto a mano en el MDX: los estilos salen de `docs.css`.
 
 ## Calidad

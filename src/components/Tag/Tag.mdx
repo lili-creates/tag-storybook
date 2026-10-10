@@ -81,8 +81,6 @@ Los nombres de las propiedades de Figma se corresponden con estas props del comp
 | `error` | <Tag status="error" label="label" text="text" /> | fallo o resultado no completado · icono XCircle |
 | `neutral` | <Tag status="neutral" label="label" text="text" /> | clasificación sin valoración semántica · icono configurable |
 
-<Canvas of={TagStories.Estados} />
-
 ### Show label group
 
 | Valor | Vista | Uso |
@@ -92,16 +90,12 @@ Los nombres de las propiedades de Figma se corresponden con estas props del comp
 
 En tablas densas, permite evitar repetir el tipo de dato en cada fila cuando el encabezado o contexto ya lo identifica. Usa false solo si Text y contexto siguen siendo comprensibles sin depender del color.
 
-<Canvas of={TagStories.SoloTexto} />
-
 ### Show icon (label group)
 
 | Valor | Vista | Uso |
 | --- | --- | --- |
 | `true` | <Tag size="small" status="info" label="label" text="text" /> | Muestra el icono |
 | `false` | <Tag size="small" status="info" label="label" text="text" showIcon={false} /> | Oculta el icono. |
-
-<Canvas of={TagStories.SinIcono} />
 
 ### Contenido
 
@@ -119,10 +113,6 @@ En tablas densas, permite evitar repetir el tipo de dato en cada fila cuando el 
 | --- | --- | --- |
 | width | `hug` | Nunca fill ni ancho fijo, ni en el componente ni por restricciones del contenedor. |
 | height | `hug` | Nunca fill ni ancho fijo, ni en el componente ni por restricciones del contenedor. |
-
-### Todas las variantes
-
-<Canvas of={TagStories.MatrizDeVariantes} />
 
 ### Uso en código
 
