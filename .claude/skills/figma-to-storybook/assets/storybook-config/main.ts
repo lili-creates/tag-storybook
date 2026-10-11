@@ -14,6 +14,11 @@ const config: StorybookConfig = {
     },
   ],
   framework: '@storybook/react-vite',
+  // Solo si usas Vercel Analytics: el manager únicamente ve variables STORYBOOK_*
+  env: (config) => ({
+    ...config,
+    STORYBOOK_VERCEL_OBSERVABILITY_CLIENT_CONFIG: process.env.VITE_VERCEL_OBSERVABILITY_CLIENT_CONFIG ?? '',
+  }),
 };
 
 export default config;
