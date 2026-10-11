@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react';
+import { useEffect, useState, type MouseEvent, type ReactNode } from 'react';
 import { Tag, type TagStatus } from './Tag';
 
 /** Componentes auxiliares solo para la documentación (Tag.mdx). */
@@ -173,14 +173,10 @@ export function TokenMatrix() {
   );
 }
 
-type TokenKind = 'space' | 'text';
-
 interface TokenRow {
   label: string;
   small: string;
   default: string;
-  /** `space` dibuja además una barra con el valor; `text` solo muestra el valor resuelto. */
-  kind?: TokenKind;
 }
 
 interface TokenGroup {
@@ -193,11 +189,11 @@ interface TokenGroup {
 const SPACING: TokenGroup = {
   title: 'Espaciado y radio',
   rows: [
-    { label: 'Padding vertical', small: '--space-xs', default: '--space-md', kind: 'space' },
-    { label: 'Padding horizontal', small: '--space-md', default: '--space-lg', kind: 'space' },
-    { label: 'Gap icono–Label', small: '--space-xs', default: '--space-xs', kind: 'space' },
-    { label: 'Gap grupo–Text', small: '--space-md', default: '--space-md', kind: 'space' },
-    { label: 'Radio', small: '--radius-semantic-xs', default: '--radius-semantic-xs', kind: 'space' },
+    { label: 'Padding vertical', small: '--space-xs', default: '--space-md' },
+    { label: 'Padding horizontal', small: '--space-md', default: '--space-lg' },
+    { label: 'Gap icono–Label', small: '--space-xs', default: '--space-xs' },
+    { label: 'Gap grupo–Text', small: '--space-md', default: '--space-md' },
+    { label: 'Radio', small: '--radius-semantic-xs', default: '--radius-semantic-xs' },
   ],
 };
 
@@ -205,40 +201,20 @@ const typeGroup = (title: string, prefix: 'label' | 'body', weight: string, styl
   title,
   styles,
   rows: [
-    { label: 'Familia', small: `--${prefix}-s-font-family`, default: `--${prefix}-m-font-family`, kind: 'text' },
-    { label: 'Tamaño', small: `--${prefix}-s-font-size`, default: `--${prefix}-m-font-size`, kind: 'text' },
-    { label: 'Interlineado', small: `--${prefix}-s-line-height`, default: `--${prefix}-m-line-height`, kind: 'text' },
-    { label: 'Tracking', small: `--${prefix}-s-letter-spacing`, default: `--${prefix}-m-letter-spacing`, kind: 'text' },
-    { label: 'Peso', small: weight, default: weight, kind: 'text' },
+    { label: 'Familia', small: `--${prefix}-s-font-family`, default: `--${prefix}-m-font-family` },
+    { label: 'Tamaño', small: `--${prefix}-s-font-size`, default: `--${prefix}-m-font-size` },
+    { label: 'Interlineado', small: `--${prefix}-s-line-height`, default: `--${prefix}-m-line-height` },
+    { label: 'Tracking', small: `--${prefix}-s-letter-spacing`, default: `--${prefix}-m-letter-spacing` },
+    { label: 'Peso', small: weight, default: weight },
   ],
 });
 
 const LABEL = typeGroup('Label', 'label', '--font-weight-bold', { small: 'Label/s/Bold', default: 'Label/m/Bold' });
 const TEXT = typeGroup('Text', 'body', '--font-weight-regular', { small: 'Body/s/Regular', default: 'Body/m/Regular' });
 
-/** Un token: nombre + valor resuelto en el modo activo (y barra proporcional para espaciados). */
-function TokenValue({ name, kind }: { name: string; kind?: TokenKind }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [value, setValue] = useState('');
-  useLayoutEffect(() => {
-    if (ref.current) setValue(getComputedStyle(ref.current).getPropertyValue(name).trim());
-  }, [name]);
-  const shown = value.replace(/^'?"?([^,'"]+).*$/, name.includes('font-family') ? '$1' : '$&');
-  const px = parseFloat(value);
-  return (
-    <span ref={ref} style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 12px', minWidth: 0 }}>
-      <code style={{ ...code, wordBreak: 'break-word' }}>var({name})</code>
-      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, opacity: 0.85 }}>
-        {kind === 'space' && Number.isFinite(px) && (
-          <span
-            aria-hidden="true"
-            style={{ width: Math.max(px, 2) * 2, height: 8, borderRadius: 2, background: 'rgba(128,128,128,.55)', flex: 'none' }}
-          />
-        )}
-        <span>{shown || '—'}</span>
-      </span>
-    </span>
-  );
+/** Un token: solo su nombre; el valor sale de la primitiva y no debe copiarse a mano. */
+function TokenValue({ name }: { name: string }) {
+  return <code style={{ ...code, wordBreak: 'break-word' }}>var({name})</code>;
 }
 
 function TokenCard({ group }: { group: TokenGroup }) {
@@ -266,10 +242,10 @@ function TokenCard({ group }: { group: TokenGroup }) {
             <div key={r.label} style={{ display: 'contents' }}>
               <span style={{ ...cell, fontWeight: 600, fontSize: 14 }}>{r.label}</span>
               <div style={cell}>
-                <TokenValue name={r.small} kind={r.kind} />
+                <TokenValue name={r.small} />
               </div>
               <div style={cell}>
-                <TokenValue name={r.default} kind={r.kind} />
+                <TokenValue name={r.default} />
               </div>
             </div>
           ))}
@@ -311,8 +287,7 @@ function UntokenizedCard() {
 }
 
 /**
- * Otros tokens (Figma · 04): una tarjeta por tema con `small` y `default` en columnas paralelas. Junto a cada
- * token se muestra el valor que resuelve en tokens.css.
+ * Otros tokens (Figma · 04): una tarjeta por tema con `small` y `default` en columnas paralelas. Solo nombres de token (sin valores resueltos).
  */
 export function OtherTokens() {
   return (
