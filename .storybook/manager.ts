@@ -31,10 +31,14 @@ const cleanUrl = (raw: string) => {
   }
 };
 
-inject({
-  disableAutoTrack: true,
-  beforeSend: (event: BeforeSendEvent) => (event.type === 'pageview' ? { ...event, url: cleanUrl(event.url) } : event),
-});
+// Vercel inyecta al compilar la ruta propia (con hash) del script; sin ella se usa /_vercel/insights/, que los bloqueadores filtran.
+inject(
+  {
+    disableAutoTrack: true,
+    beforeSend: (event: BeforeSendEvent) => (event.type === 'pageview' ? { ...event, url: cleanUrl(event.url) } : event),
+  },
+  process.env.STORYBOOK_VERCEL_OBSERVABILITY_CLIENT_CONFIG,
+);
 
 addons.register('tag/analytics', (api) => {
   let last = '';
