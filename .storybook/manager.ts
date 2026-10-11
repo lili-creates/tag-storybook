@@ -36,25 +36,6 @@ inject({
   beforeSend: (event: BeforeSendEvent) => (event.type === 'pageview' ? { ...event, url: cleanUrl(event.url) } : event),
 });
 
-/**
- * Diagnóstico: dice en la consola del navegador si el script de Vercel ha llegado. Sin él, un fallo es silencioso.
- * - «no se pudo cargar»: 404 (Analytics se activó DESPUÉS de este despliegue → redesplegar y promover a producción)
- *   o bloqueado por una extensión (bloqueador de anuncios, escudos de Brave/Safari…).
- * No hace peticiones extra: escucha el <script> que ya inyecta `inject()`. En local no se muestra nada.
- */
-const isLocal = /^(localhost|127\.|\[::1\])/.test(location.hostname);
-if (!isLocal) {
-  const tag = document.querySelector<HTMLScriptElement>('script[src*="/_vercel/insights/"]');
-  tag?.addEventListener('load', () => console.info('[analytics] Vercel Web Analytics: script cargado ✔'));
-  tag?.addEventListener('error', () =>
-    console.warn(
-      '[analytics] Vercel Web Analytics: no se pudo cargar /_vercel/insights/script.js. ' +
-        'Si es un 404, activa Analytics en el proyecto, redespliega y promueve a producción; ' +
-        'si está bloqueado, desactiva el bloqueador de anuncios en este sitio.',
-    ),
-  );
-}
-
 addons.register('tag/analytics', (api) => {
   let last = '';
   const track = () => {
