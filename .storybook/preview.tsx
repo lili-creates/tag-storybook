@@ -33,7 +33,7 @@ const preview: Preview = {
     layout: 'centered',
     controls: { expanded: true },
     docs: { container: ThemedDocsContainer, toc: { headingSelector: 'h2', title: 'En esta página' } },
-    options: { storySort: { order: ['Componentes', ['Tag', ['Documentación', 'Playground', 'Estados', 'Tamaños']]] } },
+    options: { storySort: { order: ['Componentes', ['Tag', ['Documentación', 'Playground']]] } },
   },
 };
 

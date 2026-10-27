@@ -1,5 +1,4 @@
 # Errores ya encontrados (y su causa)
-
 | Síntoma | Causa | Arreglo |
 | --- | --- | --- |
 | Tablas MDX salen como `\| a \| b \|` | MDX no activa GFM por defecto | `remark-gfm` en `main.ts` (`mdxCompileOptions.remarkPlugins`) |
@@ -38,5 +37,5 @@
 | Auditoría: enlaces pequeños azules sobre tarjeta gris dan 4,46:1 (axe `color-contrast`) | Azul por defecto de Storybook sobre `#f7f7f7` | Oscurecer el enlace en claro (`#0057c2`, ver `docs.css`) |
 | Auditoría: `lang="en"` con contenido en español; logo genérico «Storybook» | No se configura por defecto | `document.documentElement.lang = 'es'` en `preview.tsx` y `manager.ts`; `brandTitle` en el tema del manager |
 | Auditoría: «False» del control booleano con 2,75:1 | Storybook pone 50 % de opacidad a la opción inactiva | Subir el color con CSS (`docs.css`, `.docblock-argstable label > span[aria-hidden]`) |
-| Stories de ejemplo (galerías, variantes fijas) muestran controles que no cambian nada o no aplican | Todas heredan el panel de controles del componente | Solo el Playground es interactivo: `parameters: { controls: { disable: true } }` en el resto; en el Playground, `argTypes.x.if` para dependencias reales (p. ej. `icon` solo en neutral, `showIcon` solo con label group) |
 | Auditoría a 320 px: Do/Don't desborda 10 px | `minmax(260px, 1fr)` no cabe | `minmax(min(260px, 100%), 1fr)` |
+| Sidebar con una entrada por variante (Estados, Tamaños, Small, Sin icono…) y controles que no aplican | Una story por caso, sin criterio | Patrón recomendado (guía de Storybook, zeroheight): en el menú solo **Documentación + Playground**; las variantes se enseñan con `<Canvas of=…>` o tablas dentro del MDX. Las stories que solo se usan en el MDX llevan `tags: ['!dev']`; las que el MDX no usa, se eliminan. Los controles dependientes, con `argTypes.x.if` |

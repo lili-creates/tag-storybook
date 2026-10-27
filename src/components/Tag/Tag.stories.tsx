@@ -4,8 +4,8 @@ import { Tag, type TagSize, type TagStatus } from './Tag';
 const STATUSES: TagStatus[] = ['info', 'success', 'warning', 'error', 'neutral'];
 const SIZES: TagSize[] = ['small', 'default'];
 
-/** Ejemplos fijos del menú: solo el Playground es interactivo, así no hay controles que no apliquen. */
-const fixed = { controls: { disable: true } } as const;
+/** Solo se ven dentro de la página de documentación (no salen en el menú lateral). */
+const docsOnly = ['!dev'];
 
 const meta = {
   title: 'Componentes/Tag',
@@ -35,38 +35,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
 
-export const Estados: Story = {
-  parameters: { layout: 'padded', ...fixed },
-  render: (args) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
-      {STATUSES.map((status) => (
-        <Tag key={status} {...args} status={status} />
-      ))}
-    </div>
-  ),
-};
-
-export const Tamaños: Story = {
-  parameters: { layout: 'padded', ...fixed },
-  render: (args) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
-      {SIZES.map((size) => (
-        <Tag key={size} {...args} size={size} />
-      ))}
-    </div>
-  ),
-};
-
-export const Small: Story = { args: { size: 'small' }, parameters: fixed };
-
-export const SinIcono: Story = { args: { showIcon: false }, parameters: fixed };
-
-export const SoloTexto: Story = {
-  name: 'Sin label (solo Text)',
-  args: { showLabelGroup: false, text: 'En tránsito' },
-  parameters: fixed,
-};
-
 export const IconoNeutralPersonalizado: Story = {
   name: 'Neutral con icono sustituido',
   args: {
@@ -75,11 +43,12 @@ export const IconoNeutralPersonalizado: Story = {
     text: 'Cadena de frío',
     icon: <i className="ph ph-snowflake" />,
   },
-  parameters: fixed,
+  tags: docsOnly,
 };
 
 export const Combinaciones: Story = {
-  parameters: { layout: 'padded', ...fixed },
+  tags: docsOnly,
+  parameters: { layout: 'padded' },
   render: (args) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
       <Tag {...args} label="Estado del pedido" text="Confirmado" status="success" />
@@ -89,30 +58,10 @@ export const Combinaciones: Story = {
   ),
 };
 
-export const MatrizDeVariantes: Story = {
-  name: 'Matriz de variantes',
-  parameters: { layout: 'padded', ...fixed },
-  render: (args) => (
-    <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto', gap: 16, alignItems: 'center', justifyItems: 'start' }}>
-      <strong style={{ font: '500 14px Figtree, sans-serif' }}>status</strong>
-      {SIZES.map((s) => (
-        <strong key={s} style={{ font: '500 14px Figtree, sans-serif' }}>size={s}</strong>
-      ))}
-      {STATUSES.map((status) => (
-        <div key={status} style={{ display: 'contents' }}>
-          <span style={{ font: '500 14px Figtree, sans-serif' }}>{status}</span>
-          {SIZES.map((size) => (
-            <Tag key={size} {...args} size={size} status={status} />
-          ))}
-        </div>
-      ))}
-    </div>
-  ),
-};
-
 export const EjemplosDeUso: Story = {
   name: 'Ejemplos de uso',
-  parameters: { layout: 'padded', ...fixed },
+  tags: docsOnly,
+  parameters: { layout: 'padded' },
   render: () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 24, font: '400 14px Figtree, sans-serif' }}>
       <div style={{ display: 'grid', gap: 8, justifyItems: 'start' }}>
