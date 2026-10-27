@@ -205,3 +205,36 @@
 .sbdocs-content [data-theme='dark'] td {
   color: inherit;
 }
+
+/* ── Índice «En esta página» ──────────────────────────────────────────────
+   Solo h2 (11 entradas), más ancho y con aire; si el área no da para columna + índice, se oculta. */
+.sbdocs-toc--custom {
+  width: 208px !important;
+  flex: none;
+  margin-left: 32px;
+}
+.sbdocs-toc--custom nav {
+  width: 208px !important;
+  max-height: 100vh;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 64px 0 32px !important;
+}
+.sbdocs-toc--custom nav h4 {
+  margin: 0 0 12px;
+  letter-spacing: 0.06em;
+}
+.sbdocs-toc--custom nav li {
+  margin: 0;
+}
+.sbdocs-toc--custom nav a {
+  display: block;
+  padding: 6px 12px;
+  line-height: 1.4;
+  font-size: 13px;
+}
+@media (max-width: 1099px) {
+  .sbdocs-toc--custom {
+    display: none;
+  }
+}
