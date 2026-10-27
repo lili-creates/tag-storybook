@@ -33,7 +33,7 @@ Storybook trae tipografía apretada para MDX (14px, tablas de 13px, títulos sin
 Ajusta los valores aquí, no en cada MDX.
 
 ## Docs
-- `parameters.docs.toc`: índice lateral ("En esta página") con `h2, h3`.
+- `parameters.docs.toc`: índice lateral ("En esta página") solo con `h2` (con h3 llega a 30+ entradas y se aprieta); se oculta por debajo de 1100 px de área de docs.
 - `storySort`: Foundations → Componentes; dentro, `Documentación` → `Playground` → resto.
 - Fuente del DS: en `preview-head.html` (`<link>` a Google Fonts) si el DS usa una web font; iconos desde CDN si aplica.
 - IDs de story con tildes (`documentación`) funcionan (URL-encoded); si molestan, fija `id` en `Meta`/story.
