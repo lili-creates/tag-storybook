@@ -16,9 +16,11 @@
     try {
       var m = /[?&]globals=([^&]*)/.exec(location.search);
       var dark = !!m && /theme(:|%3A)dark/i.test(m[1]);
-      // El tema elegido en la barra manda sobre la URL del iframe (que puede ir un paso por detrás al volver a claro)
-      var saved = localStorage.getItem('ds-theme');
-      if (saved) dark = saved === 'dark';
+      // La URL manda. Excepción: justo después de elegir tema en la barra (<3 s) el iframe recarga con la URL
+      // anterior; ahí vale el último valor guardado (`tema|hora`). Pasado ese tiempo se ignora, para que una
+      // recarga normal nunca use una preferencia vieja.
+      var saved = (localStorage.getItem('ds-theme') || '').split('|');
+      if (saved[1] && Date.now() - Number(saved[1]) < 3000) dark = saved[0] === 'dark';
       var root = document.documentElement;
       root.dataset.theme = dark ? 'dark' : 'light';
       root.style.background = dark ? '#222325' : '#ffffff';

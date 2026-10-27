@@ -12,7 +12,7 @@ export function applyTheme(theme: Theme) {
   document.documentElement.dataset.theme = theme;
   try {
     // Lo leen preview-head.html (fondo correcto al recargar el iframe) y el manager (evento `storage`)
-    localStorage.setItem('ds-theme', theme);
+    localStorage.setItem('ds-theme', `${theme}|${Date.now()}`);
   } catch {
     /* sin almacenamiento: solo se pierde la mejora de transición */
   }
