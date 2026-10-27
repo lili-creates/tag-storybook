@@ -3,6 +3,9 @@ import '../src/styles/tokens.css';
 import './docs.css';
 import { ThemedDocsContainer, applyTheme } from './ThemedDocsContainer';
 
+// El contenido está en español (lectores de pantalla y traductores del navegador)
+document.documentElement.lang = 'es';
+
 const withTheme: Decorator = (Story, context) => {
   const theme = context.globals.theme === 'dark' ? 'dark' : 'light';
   applyTheme(theme);

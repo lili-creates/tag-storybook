@@ -1,3 +1,5 @@
+document.documentElement.lang = 'es'; // el contenido está en español
+
 import { addons } from 'storybook/manager-api';
 import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
 import { themes } from 'storybook/theming';
@@ -6,7 +8,7 @@ import { themes } from 'storybook/theming';
 addons.register('tag/theme-sync', (api) => {
   const sync = () => {
     const theme = api.getGlobals()?.theme;
-    api.setOptions({ theme: theme === 'dark' ? themes.dark : themes.light });
+    api.setOptions({ theme: { ...(theme === 'dark' ? themes.dark : themes.light), brandTitle: 'NOMBRE · Design System' } });
   };
   api.on(GLOBALS_UPDATED, sync);
   api.on(SET_GLOBALS, sync);

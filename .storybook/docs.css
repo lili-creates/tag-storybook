@@ -238,3 +238,16 @@
     display: none;
   }
 }
+
+/* Enlaces «Sección NN →» sobre tarjeta gris: el azul por defecto da 4,46:1 en claro (mínimo AA 4,5:1) */
+:root:not([data-theme='dark']) .sbdocs-content .ds-section-link {
+  color: #0057c2;
+}
+
+/* Control booleano de Storybook: la opción inactiva usa 50 % de opacidad (2,75:1); se sube para cumplir AA */
+.sbdocs-content .docblock-argstable label > span[aria-hidden='true'] {
+  color: rgba(46, 51, 56, 0.78) !important;
+}
+:root[data-theme='dark'] .sbdocs-content .docblock-argstable label > span[aria-hidden='true'] {
+  color: rgba(201, 204, 207, 0.78) !important;
+}

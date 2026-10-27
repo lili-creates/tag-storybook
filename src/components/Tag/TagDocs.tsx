@@ -311,7 +311,7 @@ function SectionLink({ id, children }: { id: string; children: ReactNode }) {
     history.replaceState(null, '', `#${id}`);
   };
   return (
-    <a href={`#${id}`} onClick={onClick} style={{ fontSize: 13, fontWeight: 600, textUnderlineOffset: 3 }}>
+    <a className="ds-section-link" href={`#${id}`} onClick={onClick} style={{ fontSize: 13, fontWeight: 600, textUnderlineOffset: 3 }}>
       {children}
     </a>
   );
@@ -431,7 +431,7 @@ export function DoDont({ doItems, dontItems }: { doItems: DoDontItem[]; dontItem
             key={i}
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))',
               gap: '12px 24px',
               alignItems: 'center',
               padding: '16px 0',
