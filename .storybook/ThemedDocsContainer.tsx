@@ -10,7 +10,17 @@ type Theme = 'light' | 'dark';
 /** Aplica el tema al documento (tokens del Tag + fondo/color de la página). */
 export function applyTheme(theme: Theme) {
   document.documentElement.dataset.theme = theme;
-  document.body.style.background = theme === 'dark' ? '#1e1c1a' : '#ffffff';
+  try {
+    // Lo leen preview-head.html (fondo correcto al recargar el iframe) y el manager (evento `storage`)
+    localStorage.setItem('tag-theme', theme);
+  } catch {
+    /* sin almacenamiento: solo se pierde la mejora de transición */
+  }
+  // Mismo fondo que la tarjeta de docs de Storybook (themes.dark.appContentBg): sin bandas de grises distintos
+  const bg = theme === 'dark' ? '#222325' : '#ffffff';
+  document.documentElement.style.background = bg;
+  document.documentElement.style.colorScheme = theme;
+  document.body.style.background = bg;
   document.body.style.color = theme === 'dark' ? '#e5e5e5' : '#1e1c1a';
 }
 
