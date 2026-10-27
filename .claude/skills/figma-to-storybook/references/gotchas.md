@@ -39,3 +39,4 @@
 | Auditoría: `lang="en"` con contenido en español; logo genérico «Storybook» | No se configura por defecto | `document.documentElement.lang = 'es'` en `preview.tsx` y `manager.ts`; `brandTitle` en el tema del manager |
 | Auditoría: «False» del control booleano con 2,75:1 | Storybook pone 50 % de opacidad a la opción inactiva | Subir el color con CSS (`docs.css`, `.docblock-argstable label > span[aria-hidden]`) |
 | Auditoría a 320 px: Do/Don't desborda 10 px | `minmax(260px, 1fr)` no cabe | `minmax(min(260px, 100%), 1fr)` |
+| Una story de «galería» (matriz, estados…) muestra controles que no cambian nada | La story fija `size`/`status`/etc. en cada celda y esos controles quedan muertos | `argTypes: { prop: { table: { disable: true } } }` por story para lo que fija; `parameters.controls.disable` si no usa ninguno |

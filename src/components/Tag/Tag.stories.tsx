@@ -4,6 +4,10 @@ import { Tag, type TagSize, type TagStatus } from './Tag';
 const STATUSES: TagStatus[] = ['info', 'success', 'warning', 'error', 'neutral'];
 const SIZES: TagSize[] = ['small', 'default'];
 
+/** Oculta de la tabla de controles las propiedades que la story fija por su cuenta (no harían nada al cambiarlas). */
+const hide = (...props: string[]) =>
+  Object.fromEntries(props.map((p) => [p, { table: { disable: true } }])) as Record<string, { table: { disable: true } }>;
+
 const meta = {
   title: 'Componentes/Tag',
   component: Tag,
@@ -30,6 +34,7 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {};
 
 export const Estados: Story = {
+  argTypes: hide('status'),
   parameters: { layout: 'padded' },
   render: (args) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
@@ -41,6 +46,7 @@ export const Estados: Story = {
 };
 
 export const Tamaños: Story = {
+  argTypes: hide('size'),
   parameters: { layout: 'padded' },
   render: (args) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
@@ -71,6 +77,8 @@ export const IconoNeutralPersonalizado: Story = {
 };
 
 export const Combinaciones: Story = {
+  // Cada fila fija su propio contenido, estado e iconos: solo el tamaño es libre
+  argTypes: hide('status', 'label', 'text', 'showLabelGroup', 'showIcon', 'icon'),
   parameters: { layout: 'padded' },
   render: (args) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
@@ -83,6 +91,7 @@ export const Combinaciones: Story = {
 
 export const MatrizDeVariantes: Story = {
   name: 'Matriz de variantes',
+  argTypes: hide('size', 'status'), // la matriz recorre todas las combinaciones de tamaño y estado
   parameters: { layout: 'padded' },
   render: (args) => (
     <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto', gap: 16, alignItems: 'center', justifyItems: 'start' }}>
@@ -104,7 +113,7 @@ export const MatrizDeVariantes: Story = {
 
 export const EjemplosDeUso: Story = {
   name: 'Ejemplos de uso',
-  parameters: { layout: 'padded' },
+  parameters: { layout: 'padded', controls: { disable: true } }, // ejemplos fijos: no usan controles
   render: () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 24, font: '400 14px Figtree, sans-serif' }}>
       <div style={{ display: 'grid', gap: 8, justifyItems: 'start' }}>
